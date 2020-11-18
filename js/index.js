@@ -42,7 +42,6 @@ function createBoxes(params) {
         app.stage.addChild(box[index]);
         app.stage.addChild(mask[index]);
     }
-    console.log(app.stage);
 }
 
 function createSprite(imgUrl, index, x, y, name = null) {
@@ -55,11 +54,13 @@ function createSprite(imgUrl, index, x, y, name = null) {
     player.name = name;
 
     let m = new PIXI.Graphics();
-    console.log(m);
     m.beginFill(0xFFFFFF);
-    m.alpha = 0.6;
+    m.alpha = 0;
     m.drawRoundedRect(x-bW/2, y-bW/2,bW, bW);
     m.endFill();
+
+    m.interactive = true;
+    m.buttonMode = true;
 
     m.on("pointerdown", glowBox);
 
@@ -70,11 +71,11 @@ function createSprite(imgUrl, index, x, y, name = null) {
 
 // function to glow the box
 function glowBox(e) {
-    console.log(this);
-
+    this.alpha = 0.6;
+    let that = this;
     setTimeout(function () {
-        console.log(this);
-    }, 3000);
+        that.alpha = 0;
+    }, 400);
 }
 
 function gameLoop(delta) {}
