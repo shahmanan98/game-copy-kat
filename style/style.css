@@ -1,0 +1,12 @@
+#mainDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#gameDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
