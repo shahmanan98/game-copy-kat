@@ -1,8 +1,6 @@
-// const { Graphics } = require("./pixi_5");
-
 const app = new PIXI.Application({
     width: window.screen.availWidth / 2,
-    height: window.screen.availHeight
+    height: window.innerHeight
 });
 
 document.getElementById("gameDiv").appendChild(app.view);
@@ -56,7 +54,7 @@ function createSprite(imgUrl, index, x, y, name = null) {
     let m = new PIXI.Graphics();
     m.beginFill(0xFFFFFF);
     m.alpha = 0;
-    m.drawRoundedRect(x-bW/2, y-bW/2,bW, bW);
+    m.drawRoundedRect(x - bW / 2, y - bW / 2, bW, bW);
     m.endFill();
 
     m.interactive = true;
