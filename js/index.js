@@ -7,11 +7,13 @@ const app = new PIXI.Application({
 
 document.getElementById("gameDiv").appendChild(app.view);
 
-const PINK = 0, BLUE = 1, YELLOW = 2, GREEN = 3;
-let boxes = {};
+const PINK = 0,
+    BLUE = 1,
+    YELLOW = 2,
+    GREEN = 3;
 let player;
-let bPink, bBlue, bYellow, bGreen;
-let mask;
+let box = [];
+let mask = [];
 
 const bW = app.view.width / 5;
 
@@ -30,24 +32,20 @@ function doneLoading(e) {
 function createBoxes(params) {
     // sprites
     let loaderResources = app.loader.resources;
-    console.log(loaderResources);
 
-    bPink = createSprite(loaderResources.assetPink.url, app.view.width / 2 - bW, app.view.height / 2 - bW);
-    bBlue = createSprite(loaderResources.assetBlue.url, app.view.width / 2 - bW, app.view.height / 2 + bW);
-    bYellow = createSprite(loaderResources.assetYellow.url, app.view.width / 2 + bW, app.view.height / 2 + bW);
-    bGreen = createSprite(loaderResources.assetGreen.url, app.view.width / 2 + bW, app.view.height / 2 - bW);
+    createSprite(loaderResources.assetPink.url, PINK, app.view.width / 2 - bW, app.view.height / 2 - bW);
+    createSprite(loaderResources.assetBlue.url, BLUE, app.view.width / 2 - bW, app.view.height / 2 + bW);
+    createSprite(loaderResources.assetYellow.url, YELLOW, app.view.width / 2 + bW, app.view.height / 2 + bW);
+    createSprite(loaderResources.assetGreen.url, GREEN, app.view.width / 2 + bW, app.view.height / 2 - bW);
 
-    app.stage.addChild(bPink);
-    app.stage.addChild(bBlue);
-    app.stage.addChild(bYellow);
-    app.stage.addChild(bGreen);
-
-    mask = createMask();
-    app.stage.addChild(mask);
-
+    for (let index = 0; index < box.length; index++) {
+        app.stage.addChild(box[index]);
+        app.stage.addChild(mask[index]);
+    }
+    console.log(app.stage);
 }
 
-function createSprite(imgUrl, x, y, name = null) {
+function createSprite(imgUrl, index, x, y, name = null) {
     let player = new PIXI.Sprite.from(imgUrl);
     player.anchor.set(0.5);
     player.x = x;
@@ -55,23 +53,21 @@ function createSprite(imgUrl, x, y, name = null) {
     player.height = player.width = app.view.width / 5;
 
     player.name = name;
-    player.interactive = true;
-    player.buttonMode = true;
 
-    player.on("pointerdown", glowBox);
-    return player;
+    let m = new PIXI.Graphics();
+    console.log(m);
+    m.beginFill(0xFFFFFF);
+    m.alpha = 0.6;
+    m.drawRoundedRect(x-bW/2, y-bW/2,bW, bW);
+    m.endFill();
+
+    m.on("pointerdown", glowBox);
+
+    box[index] = player;
+    mask[index] = m;
 }
 
-function createMask() {
-    let mask = new PIXI.Graphics();
-    console.log(mask);
-    mask.beginFill(0xFFFFFF);
-    mask.drawRoundedRect(bW, bW+25, bW, bW);
-    // mask.endFill();
-    mask.alpha = 0.5;
 
-    return mask;
-}
 // function to glow the box
 function glowBox(e) {
     console.log(this);
