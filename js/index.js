@@ -14,15 +14,8 @@ let player;
 let boxColor = [];
 let boxClick = [];
 let boxSuccess = [];
-// let maskArray = [];
 
 const bW = app.view.width / 4;
-// // previous approach of image for every sprite
-// app.loader.add("assetPink", "./images/pink.png");
-// app.loader.add("assetBlue", "./images/blue.png");
-// app.loader.add("assetYellow", "./images/yellow.png");
-// app.loader.add("assetGreen", "./images/green.png");
-// app.loader.load(doneLoading);
 
 // ? load sprites from single image with spritesheet
 PIXI.Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").load(doneLoading);
@@ -45,7 +38,6 @@ function createBoxes(boxTextures,glowTextures) {
 
     for (let index = 0; index < boxColor.length; index++) {
         app.stage.addChild(boxColor[index]);
-        // app.stage.addChild(maskArray[index]);
         app.stage.addChild(boxClick[index]);
         app.stage.addChild(boxSuccess[index]);
 
@@ -85,21 +77,9 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     bSuccess._zindex = 2;
     bSuccess.alpha = 0;
 
-    // // approach to create graphic for interaction
-    // let m = new PIXI.Graphics();
-    // m.beginFill(0xFFFFFF);
-    // m.alpha = 0;
-    // m._zindex = -1;
-    // m.drawRoundedRect(x, y, bW-10, bW - 2);
-    // m.endFill();
-
-    // m.interactive = true;
-    // m.buttonMode = false;
-    // m.on("pointerdown", (e) => glowBox(index));
-
     bColour.on("pointerdown", (e) => glowBox(index));
     boxColor[index] = bColour;
-    // maskArray[index] = m;
+
     boxClick[index] = bClick;
     boxSuccess[index] = bSuccess;
 }
@@ -108,9 +88,6 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 
 // Async function to glow box
 async function glowBox(index) {
-    // maskArray[index].alpha = 0.45;
-    // await sleep(400);
-    // maskArray[index].alpha = 0;
     boxClick[index].alpha = 0.45;
     await sleep(400);
     boxClick[index].alpha = 0;
