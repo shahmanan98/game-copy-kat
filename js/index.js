@@ -11,8 +11,10 @@ const PINK = 0,
     GREEN = 3,
     totalBlocks = 4;
 let player;
-let box = [];
-let maskArray = [];
+let boxColor = [];
+let boxClick = [];
+let boxSuccess = [];
+// let maskArray = [];
 
 const bW = app.view.width / 4;
 // // previous approach of image for every sprite
@@ -23,65 +25,95 @@ const bW = app.view.width / 4;
 // app.loader.load(doneLoading);
 
 // ? load sprites from single image with spritesheet
-PIXI.Loader.shared.add("./images/itemcopyKat.json").load(doneLoading);
+PIXI.Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").load(doneLoading);
 
 function doneLoading() {
-    let sheet = PIXI.Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
-    createBoxes(sheet.textures);
+    let sheet1 = PIXI.Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
+    let sheet2 = PIXI.Loader.shared.resources["./images/copyKat.json"].spritesheet;
+    createBoxes(sheet1.textures,sheet2.textures);
 
     app.ticker.add(gameLoop);
 }
 
-function createBoxes(textures) {
+function createBoxes(boxTextures,glowTextures) {
     // sprites
 
-    createSprite(textures.pink, PINK, app.view.width / 2 - bW/2, app.view.height / 2 - bW/2);
-    createSprite(textures.blue, BLUE, app.view.width / 2 - bW/2, app.view.height / 2 + bW/2);
-    createSprite(textures.yellow, YELLOW, app.view.width / 2 + bW/2, app.view.height / 2 + bW/2);
-    createSprite(textures.green, GREEN, app.view.width / 2 + bW/2, app.view.height / 2 - bW/2);
+    createSprite(boxTextures.pink, PINK, app.view.width / 2 - bW/2, app.view.height / 2 - bW/2, glowTextures);
+    createSprite(boxTextures.blue, BLUE, app.view.width / 2 - bW/2, app.view.height / 2 + bW/2, glowTextures);
+    createSprite(boxTextures.yellow, YELLOW, app.view.width / 2 + bW/2, app.view.height / 2 + bW/2, glowTextures);
+    createSprite(boxTextures.green, GREEN, app.view.width / 2 + bW/2, app.view.height / 2 - bW/2, glowTextures);
 
-    for (let index = 0; index < box.length; index++) {
-        app.stage.addChild(box[index]);
-        app.stage.addChild(maskArray[index]);
+    for (let index = 0; index < boxColor.length; index++) {
+        app.stage.addChild(boxColor[index]);
+        // app.stage.addChild(maskArray[index]);
+        app.stage.addChild(boxClick[index]);
+        app.stage.addChild(boxSuccess[index]);
+
     }
 
     showPattern();
 }
 
-function createSprite(imgUrl, index, x, y, name = null) {
-    let player = new PIXI.Sprite.from(imgUrl);
+function createSprite(imgUrl, index, x, y, glowTextures) {
     x -= bW / 2;
     y -= bW / 2;
-    player.anchor.set(0);
-    player.x = x;
-    player.y = y;
-    player.height = player.width = bW;
-    player._zindex = 0;
-    player.name = name;
+    
+    // Create colores boxes
+    let bColour = new PIXI.Sprite.from(imgUrl);
+    bColour.anchor.set(0);
+    bColour.x = x;
+    bColour.y = y;
+    bColour.height = bColour.width = bW;
+    bColour._zindex = 0;
+    bColour.interactive = true;
+    bColour.buttonmode = true;
 
-    let m = new PIXI.Graphics();
-    m.beginFill(0xFFFFFF);
-    m.alpha = 0;
-    m._zindex = -1;
-    m.drawRoundedRect(x, y, bW-10, bW - 2);
-    m.endFill();
+    // Create sprites for interactions
+    let bClick = new PIXI.Sprite.from(glowTextures.clickBox);
+    bClick.anchor.set(0);
+    bClick.x = x-4;
+    bClick.y = y-4;
+    bClick.height = bClick.width = bW-1;
+    bClick._zindex = 1;
+    bClick.alpha = 0;
+    
+    let bSuccess = new PIXI.Sprite.from(glowTextures.successBox);
+    bSuccess.anchor.set(0);
+    bSuccess.x = x-3;
+    bSuccess.y = y-3;
+    bSuccess.height = bSuccess.width = bW;
+    bSuccess._zindex = 2;
+    bSuccess.alpha = 0;
 
-    m.interactive = true;
-    m.buttonMode = false;
+    // // approach to create graphic for interaction
+    // let m = new PIXI.Graphics();
+    // m.beginFill(0xFFFFFF);
+    // m.alpha = 0;
+    // m._zindex = -1;
+    // m.drawRoundedRect(x, y, bW-10, bW - 2);
+    // m.endFill();
 
-    m.on("pointerdown", (e) => glowBox(index));
+    // m.interactive = true;
+    // m.buttonMode = false;
+    // m.on("pointerdown", (e) => glowBox(index));
 
-    box[index] = player;
-    maskArray[index] = m;
+    bColour.on("pointerdown", (e) => glowBox(index));
+    boxColor[index] = bColour;
+    // maskArray[index] = m;
+    boxClick[index] = bClick;
+    boxSuccess[index] = bSuccess;
 }
 
 const sleep = m => new Promise(r => setTimeout(r, m));
 
 // Async function to glow box
 async function glowBox(index) {
-    maskArray[index].alpha = 0.45;
+    // maskArray[index].alpha = 0.45;
+    // await sleep(400);
+    // maskArray[index].alpha = 0;
+    boxClick[index].alpha = 0.45;
     await sleep(400);
-    maskArray[index].alpha = 0;
+    boxClick[index].alpha = 0;
 }
 
 function gameLoop(delta) {
@@ -116,8 +148,8 @@ async function showPattern() {
 
 // * util to change interactive mode of boxes
 function changeInteractivity(flag) {
-    for (const mask of maskArray) {
-        mask.interactive = flag;
+    for (const box of boxColor) {
+        box.interactive = flag;
     }
 }
 // * util to generate random color

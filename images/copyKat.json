@@ -1,0 +1,34 @@
+{
+	"frames": {
+		"clickBox": {
+			"frame": {
+				"x": 1,
+				"y": 1010,
+				"w": 329,
+				"h": 329
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"successBox": {
+			"frame": {
+				"x": 332,
+				"y": 1010,
+				"w": 316,
+				"h": 316
+			},
+			"rotated": false,
+			"trimmed": false
+		}
+
+	},
+	"meta": {
+		"image": "copyKat.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1270,
+			"h": 1538
+		},
+		"scale": "1"
+	}
+}
