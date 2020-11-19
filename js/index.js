@@ -41,6 +41,8 @@ function createBoxes(params) {
         app.stage.addChild(box[index]);
         app.stage.addChild(maskArray[index]);
     }
+
+    showPattern();
 }
 
 function createSprite(imgUrl, index, x, y, name = null) {
@@ -67,17 +69,17 @@ function createSprite(imgUrl, index, x, y, name = null) {
     maskArray[index] = m;
 }
 
+const sleep = m => new Promise(r => setTimeout(r, m));
 
-// function to glow the box
-function glowBox(index) {
+// Async function to glow box
+async function glowBox(index) {
     maskArray[index].alpha = 0.6;
-    setTimeout(function () {
-        maskArray[index].alpha = 0;
-    }, 400);
+    await sleep(400);
+    maskArray[index].alpha = 0;
 }
 
 function gameLoop(delta) {
-    
+
 }
 
 
@@ -88,7 +90,7 @@ let roundCount;
 let roundScore;
 let trueAttempts;
 
-let questionArray = [];
+let questionArray = [0,1,2,3];
 
 // * function to generate question
 function appendQuestio(params) {
@@ -96,12 +98,14 @@ function appendQuestio(params) {
     showPattern();
 }
 
-// * function to run questions
-function showPattern() {
+// * function to show pattern of questions
+async function showPattern() {
     changeInteractivity(false);
     for (const color of questionArray) {
-        glowBox(color);
+        await sleep(200);
+        await (glowBox(color));
     }
+    changeInteractivity(true);
 }
 
 // * util to change interactive mode of boxes
