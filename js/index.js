@@ -1,7 +1,7 @@
 const app = new PIXI.Application({
     width: document.getElementById("gameDiv").offsetWidth,
     height: window.innerHeight,
-    backgroundColor : 0x3b4889
+    backgroundColor: 0x3b4889
 });
 console.log(document.getElementById("gameDiv").offsetWidth);
 
@@ -25,18 +25,18 @@ PIXI.Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json")
 function doneLoading() {
     let sheet1 = PIXI.Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
     let sheet2 = PIXI.Loader.shared.resources["./images/copyKat.json"].spritesheet;
-    createBoxes(sheet1.textures,sheet2.textures);
+    createBoxes(sheet1.textures, sheet2.textures);
 
     app.ticker.add(gameLoop);
 }
 
-function createBoxes(boxTextures,glowTextures) {
+function createBoxes(boxTextures, glowTextures) {
     // sprites
 
-    createSprite(boxTextures.pink, PINK, app.view.width / 2 - bW/2, app.view.height / 2 - bW/2, glowTextures);
-    createSprite(boxTextures.blue, BLUE, app.view.width / 2 - bW/2, app.view.height / 2 + bW/2, glowTextures);
-    createSprite(boxTextures.yellow, YELLOW, app.view.width / 2 + bW/2, app.view.height / 2 + bW/2, glowTextures);
-    createSprite(boxTextures.green, GREEN, app.view.width / 2 + bW/2, app.view.height / 2 - bW/2, glowTextures);
+    createSprite(boxTextures.pink, PINK, app.view.width / 2 - bW / 2, app.view.height / 2 - bW / 2, glowTextures);
+    createSprite(boxTextures.blue, BLUE, app.view.width / 2 - bW / 2, app.view.height / 2 + bW / 2, glowTextures);
+    createSprite(boxTextures.yellow, YELLOW, app.view.width / 2 + bW / 2, app.view.height / 2 + bW / 2, glowTextures);
+    createSprite(boxTextures.green, GREEN, app.view.width / 2 + bW / 2, app.view.height / 2 - bW / 2, glowTextures);
 
     for (let index = 0; index < boxColor.length; index++) {
         app.stage.addChild(boxColor[index]);
@@ -51,35 +51,42 @@ function createBoxes(boxTextures,glowTextures) {
 function createSprite(imgUrl, index, x, y, glowTextures) {
     x -= bW / 2;
     y -= bW / 2;
-    
+
     // Create colores boxes
     let bColour = new PIXI.Sprite.from(imgUrl);
     bColour.anchor.set(0);
     bColour.x = x;
     bColour.y = y;
     bColour.height = bColour.width = bW;
-    bColour._zindex = 0;
+    bColour._zindex = 2;
     bColour.interactive = true;
     bColour.buttonmode = true;
 
     // Create sprites for interactions
     let bClick = new PIXI.Sprite.from(glowTextures.clickBox);
     bClick.anchor.set(0);
-    bClick.x = x-1;
-    bClick.y = y-1;
-    bClick.height = bClick.width = bW-1;
+    bClick.x = x - 1;
+    bClick.y = y - 1;
+    bClick.height = bClick.width = bW - 1;
     bClick._zindex = 1;
     bClick.alpha = 0;
-    
+    bClick.interactive = true;
+    bClick.buttonmode = true;
+
+
     let bSuccess = new PIXI.Sprite.from(glowTextures.successBox);
     bSuccess.anchor.set(0);
-    bSuccess.x = x-3;
-    bSuccess.y = y-3;
+    bSuccess.x = x - 3;
+    bSuccess.y = y - 3;
     bSuccess.height = bSuccess.width = bW;
-    bSuccess._zindex = 2;
+    bSuccess._zindex = 0;
     bSuccess.alpha = 0;
+    bSuccess.interactive = true;
+    bSuccess.buttonmode = true;
 
-    bColour.on("pointerdown", (e) => glowBox(index));
+    // bColour.on("pointerdown", (e) => glowBoxPlayed(index));
+    // bClick.on("pointerdown", (e) => glowBoxPlayed(index));
+    bSuccess.on("pointerdown", (e) => glowBoxPlayed(index));
     boxColor[index] = bColour;
 
     boxClick[index] = bClick;
@@ -89,10 +96,15 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
 const sleep = m => new Promise(r => setTimeout(r, m));
 
 // Async function to glow box
-async function glowBox(index) {
+async function glowClickBox(index) {
     boxClick[index].alpha = 0.45;
     await sleep(400);
     boxClick[index].alpha = 0;
+}
+async function glowSuccessBox(index) {
+    boxSuccess[index].alpha = 0.45;
+    await sleep(400);
+    boxSuccess[index].alpha = 0;
 }
 
 function gameLoop(delta) {
@@ -103,32 +115,66 @@ function gameLoop(delta) {
 
 // ! logic for game starts from here
 
-let roundCount;
-let roundScore;
-let trueAttempts;
+let roundCount = 0;
+let roundScore = [0, 0, 0];
+let totalScore = 0;
+let playerInputCount = 0;
 
-let questionArray = [0,1,2,3];
+let questionArray = [];
+nextQuestion();
 
+// * to manage player input
+function glowBoxPlayed(index) {
+    if (playerInputCount < questionArray.length - 1) {
+        if (index == questionArray[playerInputCount]) {
+            glowClickBox(index);
+            playerInputCount++;
+        } else {
+            // ! THROW ERROR FOR WRONG INPUT
+            playerInputCount = 0;
+            window.prompt("WRONG INOUT see again");
+            console.log("WRONG INOUT");
+        }
+    } else {
+        if (index == questionArray[playerInputCount]) {
+            playerInputCount = 0;
+            roundScore[roundCount]++;
+            const run = async () => {
+                await glowSuccessBox(index);
+                nextQuestion();
+            }
+            run();
+        } else {
+            // ! THROW ERROR FOR WRONG INPUT
+            console.log("WRONG INOUT");
+
+        }
+    }
+}
 // * function to generate question
-function appendQuestio(params) {
+async function nextQuestion() {
+    await sleep(400);
+    console.log(questionArray);
     questionArray = [...questionArray, getRandomColor()];
+    console.log(questionArray);
     showPattern();
 }
 
 // * function to show pattern of questions
 async function showPattern() {
-    changeInteractivity(false);
+    // changeInteractivity(false);
     for (const color of questionArray) {
         await sleep(200);
-        await (glowBox(color));
+        await (glowClickBox(color));
     }
-    changeInteractivity(true);
+    // changeInteractivity(true);
 }
 
 // * util to change interactive mode of boxes
 function changeInteractivity(flag) {
     for (const box of boxColor) {
         box.interactive = flag;
+        box.buttonmode = flag;
     }
 }
 // * util to generate random color
