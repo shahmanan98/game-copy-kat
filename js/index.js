@@ -14,7 +14,7 @@ let player;
 let box = [];
 let maskArray = [];
 
-const bW = app.view.width / 5;
+const bW = app.view.width / 4;
 // // previous approach of image for every sprite
 // app.loader.add("assetPink", "./images/pink.png");
 // app.loader.add("assetBlue", "./images/blue.png");
@@ -50,17 +50,20 @@ function createBoxes(textures) {
 
 function createSprite(imgUrl, index, x, y, name = null) {
     let player = new PIXI.Sprite.from(imgUrl);
-    player.anchor.set(0.5);
+    x -= bW / 2;
+    y -= bW / 2;
+    player.anchor.set(0);
     player.x = x;
     player.y = y;
-    player.height = player.width = app.view.width / 5;
-
+    player.height = player.width = bW;
+    player._zindex = 0;
     player.name = name;
 
     let m = new PIXI.Graphics();
     m.beginFill(0xFFFFFF);
     m.alpha = 0;
-    m.drawRoundedRect(x - bW / 2, y - bW / 2, bW, bW);
+    m._zindex = -1;
+    m.drawRoundedRect(x, y, bW-10, bW - 2);
     m.endFill();
 
     m.interactive = true;
@@ -76,7 +79,7 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 
 // Async function to glow box
 async function glowBox(index) {
-    maskArray[index].alpha = 0.6;
+    maskArray[index].alpha = 0.45;
     await sleep(400);
     maskArray[index].alpha = 0;
 }
