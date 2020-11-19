@@ -1,0 +1,83 @@
+{
+	"frames": {
+		"blue": {
+			"frame": {
+				"x": 1069,
+				"y": 334,
+				"w": 211,
+				"h": 219
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 1069,
+				"y": 106,
+				"w": 211,
+				"h": 219
+			},
+			"sourceSize": {
+				"w": 211,
+				"h": 219
+			}
+		},
+		"green": {
+			"frame": {
+				"x": 841,
+				"y": 334,
+				"w": 212,
+				"h": 219
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 841,
+				"y": 334,
+				"w": 212,
+				"h": 219
+			},
+			"sourceSize": {
+				"w": 212,
+				"h": 219
+			}
+		},
+		"pink": {
+			"frame": {
+				"x": 841,
+				"y": 106,
+				"w": 212,
+				"h": 220
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"yellow": {
+			"frame": {
+				"x": 1069,
+				"y": 106,
+				"w": 211,
+				"h": 220
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 1069,
+				"y": 106,
+				"w": 211,
+				"h": 220
+			},
+			"sourceSize": {
+				"w": 211,
+				"h": 220
+			}
+		}
+	},
+	"meta": {
+		"image": "itemcopyKat.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1652,
+			"h": 650
+		},
+		"scale": "1"
+	}
+}

@@ -15,27 +15,30 @@ let box = [];
 let maskArray = [];
 
 const bW = app.view.width / 5;
+// // previous approach of image for every sprite
+// app.loader.add("assetPink", "./images/pink.png");
+// app.loader.add("assetBlue", "./images/blue.png");
+// app.loader.add("assetYellow", "./images/yellow.png");
+// app.loader.add("assetGreen", "./images/green.png");
+// app.loader.load(doneLoading);
 
-app.loader.add("assetPink", "./images/pink.png");
-app.loader.add("assetBlue", "./images/blue.png");
-app.loader.add("assetYellow", "./images/yellow.png");
-app.loader.add("assetGreen", "./images/green.png");
-app.loader.load(doneLoading);
+// ? load sprites from single image with spritesheet
+PIXI.Loader.shared.add("./images/itemcopyKat.json").load(doneLoading);
 
-function doneLoading(e) {
-    createBoxes();
+function doneLoading() {
+    let sheet = PIXI.Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
+    createBoxes(sheet.textures);
 
     app.ticker.add(gameLoop);
 }
 
-function createBoxes(params) {
+function createBoxes(textures) {
     // sprites
-    let loaderResources = app.loader.resources;
 
-    createSprite(loaderResources.assetPink.url, PINK, app.view.width / 2 - bW, app.view.height / 2 - bW);
-    createSprite(loaderResources.assetBlue.url, BLUE, app.view.width / 2 - bW, app.view.height / 2 + bW);
-    createSprite(loaderResources.assetYellow.url, YELLOW, app.view.width / 2 + bW, app.view.height / 2 + bW);
-    createSprite(loaderResources.assetGreen.url, GREEN, app.view.width / 2 + bW, app.view.height / 2 - bW);
+    createSprite(textures.pink, PINK, app.view.width / 2 - bW/2, app.view.height / 2 - bW/2);
+    createSprite(textures.blue, BLUE, app.view.width / 2 - bW/2, app.view.height / 2 + bW/2);
+    createSprite(textures.yellow, YELLOW, app.view.width / 2 + bW/2, app.view.height / 2 + bW/2);
+    createSprite(textures.green, GREEN, app.view.width / 2 + bW/2, app.view.height / 2 - bW/2);
 
     for (let index = 0; index < box.length; index++) {
         app.stage.addChild(box[index]);
