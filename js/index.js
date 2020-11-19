@@ -8,7 +8,8 @@ document.getElementById("gameDiv").appendChild(app.view);
 const PINK = 0,
     BLUE = 1,
     YELLOW = 2,
-    GREEN = 3;
+    GREEN = 3,
+    totalBlocks = 4;
 let player;
 let box = [];
 let mask = [];
@@ -58,9 +59,9 @@ function createSprite(imgUrl, index, x, y, name = null) {
     m.endFill();
 
     m.interactive = true;
-    m.buttonMode = true;
+    m.buttonMode = false;
 
-    m.on("pointerdown", glowBox);
+    m.on("pointerdown", (e) => glowBox(index));
 
     box[index] = player;
     mask[index] = m;
@@ -68,12 +69,44 @@ function createSprite(imgUrl, index, x, y, name = null) {
 
 
 // function to glow the box
-function glowBox(e) {
-    this.alpha = 0.6;
-    let that = this;
+function glowBox(index) {
+    mask[index].alpha = 0.6;
     setTimeout(function () {
-        that.alpha = 0;
+        mask[index].alpha = 0;
     }, 400);
 }
+let flag = true;
 
-function gameLoop(delta) {}
+function gameLoop(delta) {
+    if (!flag) {
+        showPattern();
+    }
+}
+
+
+
+// ! logic for game starts from here
+
+let roundCount;
+let roundScore;
+let trueAttempts;
+
+let questionArray = [];
+
+// * function to generate question
+function appendQuestio(params) {
+    questionArray = [...questionArray, getRandomColor()];
+    showPattern();
+}
+
+// * function to run questions
+function showPattern() {
+    for (const color of questionArray) {
+        glowBox(color);
+    }
+}
+
+// * utility to generate random color
+function getRandomColor() {
+    return Math.floor(Math.random() * Math.floor(totalBlocks));
+}
