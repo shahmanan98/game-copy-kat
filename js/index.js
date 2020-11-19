@@ -1,7 +1,9 @@
 const app = new PIXI.Application({
-    width: window.screen.availWidth / 2,
-    height: window.innerHeight
+    width: document.getElementById("gameDiv").offsetWidth,
+    height: window.innerHeight,
+    backgroundColor : 0x3b4889
 });
+console.log(document.getElementById("gameDiv").offsetWidth);
 
 document.getElementById("gameDiv").appendChild(app.view);
 
@@ -63,8 +65,8 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     // Create sprites for interactions
     let bClick = new PIXI.Sprite.from(glowTextures.clickBox);
     bClick.anchor.set(0);
-    bClick.x = x-4;
-    bClick.y = y-4;
+    bClick.x = x-1;
+    bClick.y = y-1;
     bClick.height = bClick.width = bW-1;
     bClick._zindex = 1;
     bClick.alpha = 0;
