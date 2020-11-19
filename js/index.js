@@ -12,7 +12,7 @@ const PINK = 0,
     totalBlocks = 4;
 let player;
 let box = [];
-let mask = [];
+let maskArray = [];
 
 const bW = app.view.width / 5;
 
@@ -39,7 +39,7 @@ function createBoxes(params) {
 
     for (let index = 0; index < box.length; index++) {
         app.stage.addChild(box[index]);
-        app.stage.addChild(mask[index]);
+        app.stage.addChild(maskArray[index]);
     }
 }
 
@@ -64,23 +64,20 @@ function createSprite(imgUrl, index, x, y, name = null) {
     m.on("pointerdown", (e) => glowBox(index));
 
     box[index] = player;
-    mask[index] = m;
+    maskArray[index] = m;
 }
 
 
 // function to glow the box
 function glowBox(index) {
-    mask[index].alpha = 0.6;
+    maskArray[index].alpha = 0.6;
     setTimeout(function () {
-        mask[index].alpha = 0;
+        maskArray[index].alpha = 0;
     }, 400);
 }
-let flag = true;
 
 function gameLoop(delta) {
-    if (!flag) {
-        showPattern();
-    }
+    
 }
 
 
@@ -101,12 +98,19 @@ function appendQuestio(params) {
 
 // * function to run questions
 function showPattern() {
+    changeInteractivity(false);
     for (const color of questionArray) {
         glowBox(color);
     }
 }
 
-// * utility to generate random color
+// * util to change interactive mode of boxes
+function changeInteractivity(flag) {
+    for (const mask of maskArray) {
+        mask.interactive = flag;
+    }
+}
+// * util to generate random color
 function getRandomColor() {
     return Math.floor(Math.random() * Math.floor(totalBlocks));
 }
