@@ -1,7 +1,7 @@
 // > create container to hold the screen with blocks
 import { Container, Loader, Sprite } from '/js/pixi.mjs';
 import { app, setCanvasSize } from "/js/app.js";
-import { createScreen_incorrect } from "/js/screen_incorrect.js";
+import { createScreen_incorrect, showIncorretInputScreen } from "/js/screen_incorrect.js";
 
 export let screen_play = new Container();
 
@@ -147,10 +147,14 @@ function glowBoxPlayed(index) {
             glowClickBox(index);
             playerInputCount++;
         } else {
-            // ! THROW ERROR FOR WRONG INPUT
+            // ? THROW ERROR FOR WRONG INPUT
             playerInputCount = 0;
-            window.prompt("WRONG INOUT see again");
-            console.log("WRONG INOUT");
+            const call = async () => {
+                await showIncorretInputScreen();
+                await sleep(150);
+                showPattern();
+            };
+            call();
         }
     } else {
         if (index == questionArray[playerInputCount]) {
@@ -162,9 +166,15 @@ function glowBoxPlayed(index) {
             }
             run();
         } else {
-            // ! THROW ERROR FOR WRONG INPUT
-            console.log("WRONG INOUT");
-
+            // ? THROW ERROR FOR WRONG INPUT
+            playerInputCount = 0;
+            const call = async () => {
+                await showIncorretInputScreen();
+                await sleep(150);
+                showPattern();
+            };
+            call();
+            
         }
     }
 }

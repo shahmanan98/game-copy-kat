@@ -51,7 +51,7 @@ export function createScreen_incorrect() {
 
 const sleep = m => new Promise(r => setTimeout(r, m));
 
-export async function showIncorretInputScren() {
+export async function showIncorretInputScreen() {
     screen_incorrect.visible = true;
     await sleep(1000);
     screen_incorrect.visible = false;
