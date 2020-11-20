@@ -1,6 +1,7 @@
 // > create container to hold the screen with blocks
 import { Container, Loader, Sprite } from '/js/pixi.mjs';
 import { app, setCanvasSize } from "/js/app.js";
+import { createScreen_incorrect } from "/js/screen_incorrect.js";
 
 export let screen_play = new Container();
 
@@ -16,13 +17,13 @@ let boxSuccess = [];
 let bW = app.view.width / 4;
 
 // ? load sprites from single image with spritesheet
-Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").load(createScreen);
+Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").add("./images/items.json").load(createScreen);
 
 function createScreen() {
     let sheet1 = Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
     let sheet2 = Loader.shared.resources["./images/copyKat.json"].spritesheet;
     createBoxes(sheet1.textures, sheet2.textures);
-
+    createScreen_incorrect();
     app.ticker.add(gameLoop);
 }
 
