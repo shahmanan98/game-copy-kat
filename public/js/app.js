@@ -17,10 +17,6 @@ export function setCanvasSize() {
 
     if (true) {
         app.view.height = h;
-        app.view.width = rw;
-    }
-    else{
-        app.view.height = rh;
-        app.view.width = w;
+        app.view.width = Math.min(rw,w);
     }
 }
