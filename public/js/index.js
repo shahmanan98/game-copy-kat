@@ -3,7 +3,7 @@ import * as PIXI from '/js/pixi.mjs';
 const app = new PIXI.Application({
     width: document.getElementById("gameDiv").offsetWidth,
     height: window.innerHeight,
-    backgroundColor: 0x3b4889
+    backgroundColor: 0x201669
 });
 document.getElementById("gameDiv").appendChild(app.view);
 
@@ -88,13 +88,13 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     boxClick[index] = bClick;
     boxSuccess[index] = bSuccess;
 }
-
+// * make app resizble
 function updateSizes(e) {
-    app.view.height = window.innerHeight;
-    app.view.width = window.innerWidth / 2;
-    bW = app.view.width / 4;
+    // app.view.height = window.innerHeight;
+    // app.view.width = window.innerWidth / 2;
+    setCanvasSize();
+    bW = app.view.width / 3;
 
-    
     for (let index = 0; index < boxColor.length; index++) {
         boxColor[index].height = boxColor[index].width = bW;
         boxClick[index].height = boxClick[index].width = bW;
@@ -115,6 +115,24 @@ function updateSizes(e) {
         boxColor[index].y = y[index];
         boxClick[index].y = y[index];
         boxSuccess[index].y = y[index];
+    }
+}
+
+// * make ratio for the canvas
+function setCanvasSize() {
+    const ratio = 1.3345;
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    let rw = h / ratio;
+    let rh = w * ratio;
+
+    if (true) {
+        app.view.height = h;
+        app.view.width = rw;
+    }
+    else{
+        app.view.height = rh;
+        app.view.width = w;
     }
 }
 
@@ -175,7 +193,7 @@ function glowBoxPlayed(index) {
 }
 // * function to generate question
 async function nextQuestion() {
-    await sleep(400);
+    await sleep(400); // ! check the interacaivity here 
     questionArray = [...questionArray, getRandomColor()];
     showPattern();
 }
