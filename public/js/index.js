@@ -3,7 +3,7 @@ import * as PIXI from '/js/pixi.mjs';
 const app = new PIXI.Application({
     width: document.getElementById("gameDiv").offsetWidth,
     height: window.innerHeight,
-    backgroundColor: 0x201669
+    backgroundColor: 0x120952
 });
 document.getElementById("gameDiv").appendChild(app.view);
 
@@ -93,7 +93,7 @@ function updateSizes(e) {
     // app.view.height = window.innerHeight;
     // app.view.width = window.innerWidth / 2;
     setCanvasSize();
-    bW = app.view.width / 3;
+    bW = app.view.width / 2.4;
 
     for (let index = 0; index < boxColor.length; index++) {
         boxColor[index].height = boxColor[index].width = bW;
@@ -102,10 +102,10 @@ function updateSizes(e) {
     }
     let x = [];
     let y = [];
-    x[PINK] = x[BLUE] = app.view.width / 2 - bW / 2;
-    x[YELLOW] = x[GREEN] = app.view.width / 2 + bW / 2;
-    y[YELLOW] = y[BLUE] = app.view.height / 2 + bW / 2;
-    y[PINK] = y[GREEN] = app.view.height / 2 - bW / 2;
+    x[PINK] = x[BLUE] = app.view.width / 2 - bW / 1.9 ;
+    x[YELLOW] = x[GREEN] = app.view.width / 2 + bW / 1.9;
+    y[YELLOW] = y[BLUE] = app.view.height / 2 + bW / 2 + bW/2.6;
+    y[PINK] = y[GREEN] = app.view.height / 2 - bW / 2 + bW/3;
 
     for (let index = 0; index < boxColor.length; index++) {
         boxColor[index].x = x[index];
