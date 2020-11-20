@@ -176,25 +176,23 @@ function glowBoxPlayed(index) {
 // * function to generate question
 async function nextQuestion() {
     await sleep(400);
-    console.log(questionArray);
     questionArray = [...questionArray, getRandomColor()];
-    console.log(questionArray);
     showPattern();
 }
 
 // * function to show pattern of questions
 async function showPattern() {
-    // changeInteractivity(false);
+    changeInteractivity(false);
     for (const color of questionArray) {
         await sleep(200);
         await (glowClickBox(color));
     }
-    // changeInteractivity(true);
+    changeInteractivity(true);
 }
 
 // * util to change interactive mode of boxes
 function changeInteractivity(flag) {
-    for (const box of boxColor) {
+    for (const box of boxSuccess) {
         box.interactive = flag;
         box.buttonmode = flag;
     }
