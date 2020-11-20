@@ -5,9 +5,10 @@ const app = new PIXI.Application({
     height: window.innerHeight,
     backgroundColor: 0x3b4889
 });
-console.log(document.getElementById("gameDiv").offsetWidth);
-
 document.getElementById("gameDiv").appendChild(app.view);
+
+// * make canvas resizable
+window.addEventListener('resize', updateSizes);
 
 const PINK = 0,
     BLUE = 1,
@@ -19,7 +20,7 @@ let boxColor = [];
 let boxClick = [];
 let boxSuccess = [];
 
-const bW = app.view.width / 4;
+let bW = app.view.width / 4;
 
 // ? load sprites from single image with spritesheet
 PIXI.Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").load(doneLoading);
@@ -40,47 +41,40 @@ function createBoxes(boxTextures, glowTextures) {
     createSprite(boxTextures.yellow, YELLOW, app.view.width / 2 + bW / 2, app.view.height / 2 + bW / 2, glowTextures);
     createSprite(boxTextures.green, GREEN, app.view.width / 2 + bW / 2, app.view.height / 2 - bW / 2, glowTextures);
 
+    updateSizes();
     for (let index = 0; index < boxColor.length; index++) {
         app.stage.addChild(boxColor[index]);
         app.stage.addChild(boxClick[index]);
         app.stage.addChild(boxSuccess[index]);
-
     }
-
     showPattern();
 }
 
 function createSprite(imgUrl, index, x, y, glowTextures) {
-    x -= bW / 2;
-    y -= bW / 2;
 
     // Create colores boxes
     let bColour = new PIXI.Sprite.from(imgUrl);
-    bColour.anchor.set(0);
-    bColour.x = x;
-    bColour.y = y;
-    bColour.height = bColour.width = bW;
+    bColour.anchor.set(0.5);
+    // bColour.x = x;
+    // bColour.y = y;
+    // bColour.height = bColour.width = bW;
     bColour._zindex = 2;
-    bColour.interactive = true;
-    bColour.buttonmode = true;
 
     // Create sprites for interactions
     let bClick = new PIXI.Sprite.from(glowTextures.clickBox);
-    bClick.anchor.set(0);
-    bClick.x = x - 1;
-    bClick.y = y - 1;
-    bClick.height = bClick.width = bW - 1;
+    bClick.anchor.set(0.5);
+    // bClick.x = x - 1;
+    // bClick.y = y - 1;
+    // bClick.height = bClick.width = bW - 1;
     bClick._zindex = 1;
     bClick.alpha = 0;
-    bClick.interactive = true;
-    bClick.buttonmode = true;
 
 
     let bSuccess = new PIXI.Sprite.from(glowTextures.successBox);
-    bSuccess.anchor.set(0);
-    bSuccess.x = x - 3;
-    bSuccess.y = y - 3;
-    bSuccess.height = bSuccess.width = bW;
+    bSuccess.anchor.set(0.5);
+    // bSuccess.x = x - 3;
+    // bSuccess.y = y - 3;
+    // bSuccess.height = bSuccess.width = bW;
     bSuccess._zindex = 0;
     bSuccess.alpha = 0;
     bSuccess.interactive = true;
@@ -93,6 +87,35 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
 
     boxClick[index] = bClick;
     boxSuccess[index] = bSuccess;
+}
+
+function updateSizes(e) {
+    app.view.height = window.innerHeight;
+    app.view.width = window.innerWidth / 2;
+    bW = app.view.width / 4;
+
+    
+    for (let index = 0; index < boxColor.length; index++) {
+        boxColor[index].height = boxColor[index].width = bW;
+        boxClick[index].height = boxClick[index].width = bW;
+        boxSuccess[index].height = boxSuccess[index].width = bW;
+    }
+    let x = [];
+    let y = [];
+    x[PINK] = x[BLUE] = app.view.width / 2 - bW / 2;
+    x[YELLOW] = x[GREEN] = app.view.width / 2 + bW / 2;
+    y[YELLOW] = y[BLUE] = app.view.height / 2 + bW / 2;
+    y[PINK] = y[GREEN] = app.view.height / 2 - bW / 2;
+
+    for (let index = 0; index < boxColor.length; index++) {
+        boxColor[index].x = x[index];
+        boxClick[index].x = x[index];
+        boxSuccess[index].x = x[index];
+        
+        boxColor[index].y = y[index];
+        boxClick[index].y = y[index];
+        boxSuccess[index].y = y[index];
+    }
 }
 
 const sleep = m => new Promise(r => setTimeout(r, m));
@@ -109,10 +132,7 @@ async function glowSuccessBox(index) {
     boxSuccess[index].alpha = 0;
 }
 
-function gameLoop(delta) {
-
-}
-
+function gameLoop(delta) {}
 
 
 // ! logic for game starts from here
