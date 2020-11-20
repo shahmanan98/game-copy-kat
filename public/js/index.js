@@ -1,3 +1,5 @@
+import * as PIXI from '/js/pixi.mjs';
+
 const app = new PIXI.Application({
     width: document.getElementById("gameDiv").offsetWidth,
     height: window.innerHeight,
