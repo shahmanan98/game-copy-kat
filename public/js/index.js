@@ -55,6 +55,7 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     // Create colores boxes
     let bColour = new PIXI.Sprite.from(imgUrl);
     bColour.anchor.set(0.5);
+    bColour.tint = 0xeeeeee;
     // bColour.x = x;
     // bColour.y = y;
     // bColour.height = bColour.width = bW;
