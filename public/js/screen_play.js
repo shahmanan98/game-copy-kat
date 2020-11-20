@@ -2,7 +2,7 @@
 import { Container, Loader, Sprite } from '/js/pixi.mjs';
 import { app, setCanvasSize } from "/js/app.js";
 
-let screen_play = new Container();
+export let screen_play = new Container();
 
 const PINK = 0,
     BLUE = 1,
@@ -36,9 +36,9 @@ function createBoxes(boxTextures, glowTextures) {
 
     updateSizes();
     for (let index = 0; index < boxColor.length; index++) {
-        app.stage.addChild(boxColor[index]);
-        app.stage.addChild(boxClick[index]);
-        app.stage.addChild(boxSuccess[index]);
+        screen_play.addChild(boxColor[index]);
+        screen_play.addChild(boxClick[index]);
+        screen_play.addChild(boxSuccess[index]);
     }
     showPattern();
 }
