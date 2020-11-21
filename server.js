@@ -8,7 +8,7 @@ global.path = require('path');
 // =======================
 // Environment Variables
 // =======================
-var PORT = 3000;
+const PORT = process.env.PORT || 5000;
 
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname+'/index.html'));
