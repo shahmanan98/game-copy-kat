@@ -12,6 +12,7 @@ import {
     createScreenPlay,
     screen_play
 } from "/js/screen_play.js";
+import { playClick } from "./sound/sound.js";
 
 export const screen_welcome = new Container();
 let textSprite;
@@ -117,8 +118,7 @@ export function createScreenWelcome() {
 }
 
 export function showHelpScreen(flag) {
-    let click = PIXI.sound.add('music', '/audio/buttonClick.mp3');
-    click.play();
+    playClick();
     screen_welcome.visible = false;
     createScreenPlay();
     screen_play.visible = true;

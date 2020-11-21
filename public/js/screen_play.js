@@ -17,7 +17,7 @@ import {
 import {
     gameOver
 } from "/js/screen_gameOver.js";
-import { playBoxes } from "/js/sound/sound.js";
+import { playBoxes, playMute } from "/js/sound/sound.js";
 
 
 export let screen_play = new Container();
@@ -149,6 +149,9 @@ function createTitle(textures) {
     btn_mute.x = app.view.width * 1.2;
     btn_mute.y = bar.height / 1.5;
     btn_mute.width = btn_mute.height = bar.height / 2;
+    btn_mute.interactive = true;
+    btn_mute.buttonMode = true;
+    btn_mute.on('pointertap', toggleMute);
     bar.addChild(btn_mute);
     let btn_mute_slash = Sprite.from(textures.button_slash_white);
     btn_mute_slash.anchor.set(0.5);
@@ -156,6 +159,7 @@ function createTitle(textures) {
     btn_mute_slash.y = bar.height / 1.5;
     btn_mute_slash.width = btn_mute_slash.height = bar.height / 1.5;
     btn_mute_slash.visible = false;
+    button_slash_white = btn_mute_slash;
     bar.addChild(btn_mute_slash);
     btn_mute_slash = Sprite.from(textures.button_slash_black);
     btn_mute_slash.anchor.set(0.5);
@@ -163,6 +167,7 @@ function createTitle(textures) {
     btn_mute_slash.y = bar.height / 1.5;
     btn_mute_slash.width = btn_mute_slash.height = bar.height / 2.5;
     btn_mute_slash.visible = false;
+    button_slash_black = btn_mute_slash;
     bar.addChild(btn_mute_slash);
 
     // Score Bar - Score Text
@@ -184,6 +189,17 @@ function createTitle(textures) {
 
     screen_play.addChild(bar);
     screen_play.addChild(s_bar);
+}
+
+// * to manage mute
+let mute = false;
+let button_slash_black;
+let button_slash_white; 
+function toggleMute() {
+    mute = !mute;
+    button_slash_black.visible = mute;
+    button_slash_white.visible = mute;
+    playMute();
 }
 
 //  * to manage player input
