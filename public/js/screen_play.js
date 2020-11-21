@@ -17,6 +17,7 @@ import {
 import {
     gameOver
 } from "/js/screen_gameOver.js";
+import { playBoxes } from "/js/sound/sound.js";
 
 
 export let screen_play = new Container();
@@ -33,10 +34,9 @@ let boxSuccess = [];
 
 let bW = app.view.width / 4;
 
-// ? load sprites from single image with spritesheet
-Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").add("./images/items.json").load(createScreen);
 
-function createScreen() {
+
+export function createScreen() {
     let sheet1 = Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
     let sheet2 = Loader.shared.resources["./images/copyKat.json"].spritesheet;
     let sheet3 = Loader.shared.resources["./images/items.json"].spritesheet;
@@ -296,11 +296,13 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 // Async function to glow box
 async function glowClickBox(index) {
     boxClick[index].alpha = 0.45;
+    playBoxes(index);
     await sleep(400);
     boxClick[index].alpha = 0;
 }
 async function glowSuccessBox(index) {
     boxSuccess[index].alpha = 0.45;
+    playBoxes(index);
     await sleep(400);
     boxSuccess[index].alpha = 0;
 }

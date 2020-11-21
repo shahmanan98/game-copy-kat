@@ -8,6 +8,7 @@ import {
 import {
     app
 } from "/js/app.js";
+import { playIncorrect } from "/js/sound/sound.js";
 
 export const screen_incorrect = new Container();
 let textSprite;
@@ -49,6 +50,7 @@ export function createScreen_incorrect() {
 const sleep = m => new Promise(r => setTimeout(r, m));
 
 export async function showIncorretInputScreen(txt = "Incorrect Input Watch pattern Again!") {
+    playIncorrect();
     textSprite.text = txt;
     screen_incorrect.visible = true;
     await sleep(2000);
