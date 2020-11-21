@@ -26,6 +26,7 @@ let boxColor = [];
 let boxClick = [];
 let boxSuccess = [];
 
+
 let bW = app.view.width / 4;
 
 // ? load sprites from single image with spritesheet
@@ -112,18 +113,18 @@ function createTitle(textures) {
     const style = new TextStyle({
         align: "center",
         dropShadow: true,
-        dropShadowAlpha: 0.2,
-        dropShadowBlur: 5,
-        dropShadowColor: "white",
+        dropShadowAlpha: 0.5,
+        dropShadowBlur: 2,
+        dropShadowColor: "black",
         dropShadowDistance: 3,
         fill: "white",
         fontSize: 38,
-        fontWeight: 300,
+        fontWeight: 200,
         letterSpacing: 1,
         lineJoin: "round",
         stroke: "white"
     });
-    const text = new Text('CopyKat', style);
+    let text = new Text('CopyKat', style);
     text.anchor.x = 0;
     text.anchor.y = 0.5;
     text.x = bar.width / 2;
@@ -160,7 +161,22 @@ function createTitle(textures) {
     btn_mute_slash.visible = false;
     bar.addChild(btn_mute_slash);
 
-
+    // Score Bar - Score Text
+    text = new Text(`Score : ${totalScore}`, style);
+    text.anchor.x = 0.5;
+    text.anchor.y = 0.5;
+    text.x = s_bar.width;
+    text.y = s_bar.height / 1.5;
+    scoreText = text;
+    s_bar.addChild(text);
+    // Score Bar - Round Text
+    text = new Text(`Round : ${roundCount}/3`, style);
+    text.anchor.x = 0;
+    text.anchor.y = 0.5;
+    text.x = s_bar.width / 15;
+    text.y = s_bar.height / 1.5;
+    roundText = text;
+    s_bar.addChild(text);
 
     screen_play.addChild(bar);
     screen_play.addChild(s_bar);
@@ -209,11 +225,15 @@ async function glowSuccessBox(index) {
 
 
 // ! logic for game starts from here
+// ! logic for game starts from here
+// ! logic for game starts from here
 
 let roundCount = 0;
 let roundScore = [0, 0, 0];
 let totalScore = 0;
 let playerInputCount = 0;
+let scoreText;
+let roundText;
 
 let questionArray = [];
 nextQuestion();
@@ -233,16 +253,17 @@ function glowBoxPlayed(index) {
                 showPattern();
             };
             call();
+            increaseRoundCount();
         }
     } else {
         if (index == questionArray[playerInputCount]) {
             playerInputCount = 0;
-            roundScore[roundCount]++;
             const run = async () => {
                 await glowSuccessBox(index);
                 nextQuestion();
             }
             run();
+            increaseTotalScore();
         } else {
             // ? THROW ERROR FOR WRONG INPUT
             playerInputCount = 0;
@@ -252,7 +273,7 @@ function glowBoxPlayed(index) {
                 showPattern();
             };
             call();
-
+            increaseRoundCount();
         }
     }
 }
@@ -273,6 +294,17 @@ async function showPattern() {
     changeInteractivity(true);
 }
 
+// * increase total score
+function increaseTotalScore() {
+    totalScore++;
+    roundScore[roundCount]++;
+    scoreText.text = `Score : ${totalScore}`;
+}
+// * increase Round Count
+function increaseRoundCount() {
+    roundCount++;
+    roundText.text = `Round : ${roundCount}/3`;
+}
 // * util to change interactive mode of boxes
 function changeInteractivity(flag) {
     for (const box of boxSuccess) {
