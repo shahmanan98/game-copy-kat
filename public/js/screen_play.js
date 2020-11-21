@@ -228,7 +228,7 @@ async function glowSuccessBox(index) {
 // ! logic for game starts from here
 // ! logic for game starts from here
 
-let roundCount = 0;
+let roundCount = 1;
 let roundScore = [0, 0, 0];
 let totalScore = 0;
 let playerInputCount = 0;
