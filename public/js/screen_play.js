@@ -185,6 +185,84 @@ function createTitle(textures) {
     screen_play.addChild(bar);
     screen_play.addChild(s_bar);
 }
+
+//  * to manage player input
+async function glowBoxPlayed(index) {
+    if (index == questionArray[playerInputCount]) {
+        glowClickBox(index);
+        playerInputCount++;
+        if (playerInputCount == questionArray.length) {
+            playerInputCount = 0;
+            await glowSuccessBox(index);
+            increaseTotalScore();
+            nextQuestion();
+        }
+    } else {
+        if (roundCount == 3) {
+            changeInteractivity(false);
+            gameOver({
+                callingScreen: screen_play,
+                roundScore: roundScore,
+            });
+        } else {
+            playerInputCount = 0;
+            await showIncorretInputScreen();
+            await sleep(150);
+            increaseRoundCount();
+            showPattern();
+        }
+
+    }
+    // if (playerInputCount < questionArray.length - 1) {
+    //     if (index == questionArray[playerInputCount]) {
+    //         glowClickBox(index);
+    //         playerInputCount++;
+    //     } else {
+    //         // ? THROW ERROR FOR WRONG INPUT
+    //         const call = async () => {
+    //             playerInputCount = 0;
+    //             await showIncorretInputScreen();
+    //             await sleep(150);
+    //             increaseRoundCount();
+    //             showPattern();
+    //         };
+    //         call();
+    //     }
+    // } else {
+    //         console.log(roundCount);
+
+    //     if (index == questionArray[playerInputCount]) {
+
+    //         playerInputCount = 0;
+    //         const run = async () => {
+    //             await glowSuccessBox(index);
+    //             increaseTotalScore();
+    //             nextQuestion();
+    //         }
+    //         run();
+    //     } else {
+    //         // ? THROW ERROR FOR WRONG INPUT
+    //         // if rounds complete game over
+    //         console.log(roundCount + "wrong input" + playerInputCount);
+    //         if (roundCount == 3) {
+    //             changeInteractivity(false);
+    //             gameOver({
+    //                 callingScreen: screen_play,
+    //                 roundScore: roundScore,
+    //             });
+    //         } else {
+    //             playerInputCount = 0;
+    //             const call = async () => {
+    //                 await showIncorretInputScreen();
+    //                 await sleep(150);
+    //                 increaseRoundCount();
+    //                 showPattern();
+    //             };
+    //             call();
+    //         }
+    //     }
+    // }
+}
 // * make app resizble
 function updateSizes(e) {
     setCanvasSize();
@@ -241,54 +319,7 @@ let roundText;
 let questionArray = [];
 nextQuestion();
 
-// * to manage player input
-function glowBoxPlayed(index) {
-    if (playerInputCount < questionArray.length - 1) {
-        if (index == questionArray[playerInputCount]) {
-            glowClickBox(index);
-            playerInputCount++;
-        } else {
-            // ? THROW ERROR FOR WRONG INPUT
-            playerInputCount = 0;
-            const call = async () => {
-                await showIncorretInputScreen();
-                await sleep(150);
-                showPattern();
-            };
-            call();
-            increaseRoundCount();
-        }
-    } else {
-        if (index == questionArray[playerInputCount]) {
-            playerInputCount = 0;
-            const run = async () => {
-                await glowSuccessBox(index);
-                nextQuestion();
-            }
-            run();
-            increaseTotalScore();
-        } else {
-            // ? THROW ERROR FOR WRONG INPUT
-            // if rounds complete game over
-            if (roundCount == 3) {
-                changeInteractivity(false);
-                gameOver({
-                    callingScreen: screen_play,
-                    roundScore: roundScore,
-                });
-            } else {
-                playerInputCount = 0;
-                const call = async () => {
-                    await showIncorretInputScreen();
-                    await sleep(150);
-                    showPattern();
-                };
-                call();
-                increaseRoundCount();
-            }
-        }
-    }
-}
+
 // * function to generate question
 async function nextQuestion() {
     await sleep(400); // ! check the interacaivity here 

@@ -118,9 +118,9 @@ function showScores(roundScore) {
     let y = app.view.height / 1.8 + app.view.height / 12;
     let ex = app.view.height / 15;
 
-    const max = Math.max(...roundScore);
+    const max = Math.max(roundScore[0],roundScore[1],roundScore[2]);
     let maxChosen = false;
-    for (let index = 0; index < roundScore.length; index++) {
+    for (let index = 0; index < 3; index++) {
         let text = new Text(`Round  ${index+1}`, style);
         text.anchor.set(0.5);
         text.x = app.view.width / 4;
