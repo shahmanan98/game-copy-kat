@@ -231,7 +231,6 @@ async function glowSuccessBox(index) {
 // ! logic for game starts from here
 // ! logic for game starts from here
 // ! logic for game starts from here
-const MAX_ROUND = 3;
 let roundCount = 1;
 let roundScore = [0, 0, 0];
 let totalScore = 0;
@@ -271,7 +270,7 @@ function glowBoxPlayed(index) {
         } else {
             // ? THROW ERROR FOR WRONG INPUT
             // if rounds complete game over
-            if (roundCount == MAX_ROUND) {
+            if (roundCount == 3) {
                 changeInteractivity(false);
                 gameOver({
                     callingScreen: screen_play,
