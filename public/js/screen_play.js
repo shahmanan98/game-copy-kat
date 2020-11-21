@@ -131,14 +131,14 @@ function createTitle(textures) {
     let text = new Text('CopyKat', style);
     text.anchor.x = 0;
     text.anchor.y = 0.5;
-    text.x = bar.width / 2;
+    text.x = app.view.width / 2;
     text.y = bar.height / 1.5;
     bar.addChild(text);
 
     // Title Bar Button - help
     let btn_help = Sprite.from(textures.button_help);
     btn_help.anchor.set(0.5);
-    btn_help.x = bar.width / 12;
+    btn_help.x = app.view.width / 12;
     btn_help.y = bar.height / 1.5;
     btn_help.width = btn_help.height = bar.height / 1.5;
     bar.addChild(btn_help);
@@ -146,20 +146,20 @@ function createTitle(textures) {
     // Title Bar Button - mute
     let btn_mute = Sprite.from(textures.button_mute);
     btn_mute.anchor.set(0.5);
-    btn_mute.x = bar.width * 1.2;
+    btn_mute.x = app.view.width * 1.2;
     btn_mute.y = bar.height / 1.5;
     btn_mute.width = btn_mute.height = bar.height / 2;
     bar.addChild(btn_mute);
     let btn_mute_slash = Sprite.from(textures.button_slash_white);
     btn_mute_slash.anchor.set(0.5);
-    btn_mute_slash.x = bar.width * 1.2;
+    btn_mute_slash.x = app.view.width * 1.2;
     btn_mute_slash.y = bar.height / 1.5;
     btn_mute_slash.width = btn_mute_slash.height = bar.height / 1.5;
     btn_mute_slash.visible = false;
     bar.addChild(btn_mute_slash);
     btn_mute_slash = Sprite.from(textures.button_slash_black);
     btn_mute_slash.anchor.set(0.5);
-    btn_mute_slash.x = bar.width * 1.2;
+    btn_mute_slash.x = app.view.width * 1.2;
     btn_mute_slash.y = bar.height / 1.5;
     btn_mute_slash.width = btn_mute_slash.height = bar.height / 2.5;
     btn_mute_slash.visible = false;

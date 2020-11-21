@@ -56,7 +56,7 @@ function showScoreBoard({
     let text = new Text('CopyKat', style);
     text.anchor.x = 0;
     text.anchor.y = 0.5;
-    text.x = bar.width / 2;
+    text.x = app.view.width / 2;
     text.y = bar.height / 1.5;
     bar.addChild(text);
 
