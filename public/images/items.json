@@ -79,6 +79,26 @@
 			},
 			"rotated": false,
 			"trimmed": false
+		},
+		"button_continue_green": {
+			"frame": {
+				"x": 1,
+				"y": 1341,
+				"w": 316,
+				"h": 96
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"button_continue_dark": {
+			"frame": {
+				"x": 1,
+				"y": 1439,
+				"w": 316,
+				"h": 96
+			},
+			"rotated": false,
+			"trimmed": false
 		}
 	},
 	"meta": {
