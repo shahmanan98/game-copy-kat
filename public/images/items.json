@@ -1,6 +1,6 @@
 {
 	"frames": {
-		"bg_light": {
+		"bg_trans_blue": {
 			"frame": {
 				"x": 1,
 				"y": 191,
@@ -10,7 +10,17 @@
 			"rotated": false,
 			"trimmed": false
 		},
-		"bg_medium": {
+		"bg_trans_black": {
+			"frame": {
+				"x": 1,
+				"y": 436,
+				"w": 654,
+				"h": 98
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"bg_screen": {
 			"frame": {
 				"x": 1,
 				"y": 92,
@@ -20,7 +30,7 @@
 			"rotated": false,
 			"trimmed": false
 		},
-		"bg_black": {
+		"bg_titleBar": {
 			"frame": {
 				"x": 1,
 				"y": 1,
