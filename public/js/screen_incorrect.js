@@ -10,10 +10,6 @@ import {
 } from "/js/app.js";
 
 export const screen_incorrect = new Container();
-// Loader.shared.add("./images/items.json").load(createScreen);
-// return container;
-screen_incorrect.visible = true;
-// createScreen();
 
 export function createScreen_incorrect() {
     let sheet = Loader.shared.resources["./images/items.json"].spritesheet;
@@ -36,8 +32,6 @@ export function createScreen_incorrect() {
         textBaseline: "bottom"
     });
     const text = new Text('Incorrect Input Watch pattern Again!', style);
-    // text.height = app.view.height / 4;
-    // text.width = app.view.height / 4;
     text.anchor.set(0.5);
     text.x = app.view.width / 2;
     text.y = app.view.height / 2;

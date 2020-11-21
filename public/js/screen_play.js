@@ -23,8 +23,10 @@ function createScreen() {
     let sheet1 = Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
     let sheet2 = Loader.shared.resources["./images/copyKat.json"].spritesheet;
     createBoxes(sheet1.textures, sheet2.textures);
+    
+    // ? create svreen Incorrect
     createScreen_incorrect();
-    app.ticker.add(gameLoop);
+
 }
 
 function createBoxes(boxTextures, glowTextures) {
@@ -50,33 +52,22 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     let bColour = new Sprite.from(imgUrl);
     bColour.anchor.set(0.5);
     bColour.tint = 0xeeeeee;
-    // bColour.x = x;
-    // bColour.y = y;
-    // bColour.height = bColour.width = bW;
     bColour._zindex = 2;
 
     // Create sprites for interactions
     let bClick = new Sprite.from(glowTextures.clickBox);
     bClick.anchor.set(0.5);
-    // bClick.x = x - 1;
-    // bClick.y = y - 1;
-    // bClick.height = bClick.width = bW - 1;
     bClick._zindex = 1;
     bClick.alpha = 0;
 
 
     let bSuccess = new Sprite.from(glowTextures.successBox);
     bSuccess.anchor.set(0.5);
-    // bSuccess.x = x - 3;
-    // bSuccess.y = y - 3;
-    // bSuccess.height = bSuccess.width = bW;
     bSuccess._zindex = 0;
     bSuccess.alpha = 0;
     bSuccess.interactive = true;
     bSuccess.buttonmode = true;
 
-    // bColour.on("pointerdown", (e) => glowBoxPlayed(index));
-    // bClick.on("pointerdown", (e) => glowBoxPlayed(index));
     bSuccess.on("pointerdown", (e) => glowBoxPlayed(index));
     boxColor[index] = bColour;
 
@@ -85,8 +76,6 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
 }
 // * make app resizble
 function updateSizes(e) {
-    // app.view.height = window.innerHeight;
-    // app.view.width = window.innerWidth / 2;
     setCanvasSize();
     bW = app.view.width / 2.4;
 
@@ -126,8 +115,6 @@ async function glowSuccessBox(index) {
     await sleep(400);
     boxSuccess[index].alpha = 0;
 }
-
-function gameLoop(delta) {}
 
 
 // ! logic for game starts from here
