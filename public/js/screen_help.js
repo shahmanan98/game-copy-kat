@@ -14,10 +14,9 @@ import {
 } from "/js/screen_play.js";
 import { playClick } from "./sound/sound.js";
 
-export const screen_welcome = new Container();
-let textSprite;
+export const screen_help = new Container();
 
-export function createScreenWelcome() {
+export function createScreenHelp() {
     setCanvasSize();
     screen_play.visible = false;
 
@@ -92,8 +91,8 @@ export function createScreenWelcome() {
     btn.width = app.view.width / 3;
     btn.interactive = true;
     btn.buttonMOde = true;
-    btn.on('pointertap', changeScreen);
-    // text - rules
+    btn.on('pointertap', () => { showHelpScreen(false) });
+    // text - continue
     let textStart = new Text('Continue', new TextStyle({
         align : "center",
         fill: "black",
@@ -106,20 +105,23 @@ export function createScreenWelcome() {
     textStart.y = app.view.height / 1.2;
 
 
-    screen_welcome.addChild(bar);
-    screen_welcome.addChild(s_bar);
-    screen_welcome.addChild(textHow);
-    screen_welcome.addChild(r_bar);
-    screen_welcome.addChild(textRule);
-    screen_welcome.addChild(btn);
-    screen_welcome.addChild(textStart);
+    screen_help.addChild(bar);
+    screen_help.addChild(s_bar);
+    screen_help.addChild(textHow);
+    screen_help.addChild(r_bar);
+    screen_help.addChild(textRule);
+    screen_help.addChild(btn);
+    screen_help.addChild(textStart);
 
-    app.stage.addChild(screen_welcome);
+    app.stage.addChild(screen_help);
 }
 
-export function changeScreen(flag) {
+export function showHelpScreen(flag = true) {
     playClick();
-    screen_welcome.visible = false;
-    createScreenPlay();
-    screen_play.visible = true;
+    createScreenHelp();
+    screen_help.visible = flag;
+    screen_play.visible = !flag;
+    if (!flag) {
+        createScreenPlay();
+    }
 }

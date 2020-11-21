@@ -18,6 +18,7 @@ import {
     gameOver
 } from "/js/screen_gameOver.js";
 import { playBoxes, playMute } from "/js/sound/sound.js";
+import { showHelpScreen } from "/js/screen_help.js";
 
 
 export let screen_play = new Container();
@@ -141,6 +142,9 @@ function createTitle(textures) {
     btn_help.x = app.view.width / 12;
     btn_help.y = bar.height / 1.5;
     btn_help.width = btn_help.height = bar.height / 1.5;
+    btn_help.interactive = true;
+    btn_help.buttonMode = true;
+    btn_help.on('pointertap', showHelpScreen);
     bar.addChild(btn_help);
 
     // Title Bar Button - mute
