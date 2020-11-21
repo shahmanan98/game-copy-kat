@@ -16,16 +16,17 @@ export function createScreen_incorrect() {
 
     let background = new Sprite.from(sheet.textures.bg_trans_blue);
     background.height = app.view.height;
-    background.width = app.view.height;
+    background.width = app.view.width;
     background.anchor.set(0);
-    background.x = background.y = 0;
+    background.x = 0;
+    background.y = app.view.height/11;
 
     let txtBackground = new Sprite.from(sheet.textures.bg_trans_black);
     txtBackground.height = app.view.height / 6;
-    txtBackground.width = app.view.height;
+    txtBackground.width = app.view.width;
     txtBackground.anchor.set(0.5);
     txtBackground.x = app.view.width / 2;
-        txtBackground.y = app.view.height / 2;
+    txtBackground.y = app.view.height / 2;
 
     const style = new TextStyle({
         fill: "white",
