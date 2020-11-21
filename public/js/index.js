@@ -2,6 +2,7 @@ import {Loader}  from '/js/pixi.mjs';
 import {
     app
 } from '/js/app.js';
+import { createScreenWelcome } from "/js/screen_welcome.js";
 import {
     screen_play,
     updateScreenPlay,
@@ -23,7 +24,9 @@ Loader.shared.add("./images/itemcopyKat.json")
     .add("/audio/Green.mp3")
     .add("/audio/Pink.mp3")
     .add("/audio/Yellow.mp3")
-    .load(createScreenPlay);
+    .add("/audio/buttonClick.mp3")
+    .add("/audio/homeButton.mp3")
+    .load(createScreenWelcome);
 
     app.stage.addChild(screen_play);
     app.stage.addChild(screen_incorrect);

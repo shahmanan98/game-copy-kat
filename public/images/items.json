@@ -99,6 +99,26 @@
 			},
 			"rotated": false,
 			"trimmed": false
+		},
+		"bg_help_how": {
+			"frame": {
+				"x": 1,
+				"y": 536,
+				"w": 590,
+				"h": 100
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"button_welcome": {
+			"frame": {
+				"x": 593,
+				"y": 536,
+				"w": 253,
+				"h": 100
+			},
+			"rotated": false,
+			"trimmed": false
 		}
 	},
 	"meta": {
