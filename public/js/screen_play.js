@@ -14,6 +14,10 @@ import {
     createScreen_incorrect,
     showIncorretInputScreen
 } from "/js/screen_incorrect.js";
+import {
+    gameOver
+} from "/js/screen_gameOver.js";
+
 
 export let screen_play = new Container();
 
@@ -227,7 +231,7 @@ async function glowSuccessBox(index) {
 // ! logic for game starts from here
 // ! logic for game starts from here
 // ! logic for game starts from here
-
+const MAX_ROUND = 3;
 let roundCount = 1;
 let roundScore = [0, 0, 0];
 let totalScore = 0;
@@ -266,14 +270,24 @@ function glowBoxPlayed(index) {
             increaseTotalScore();
         } else {
             // ? THROW ERROR FOR WRONG INPUT
-            playerInputCount = 0;
-            const call = async () => {
-                await showIncorretInputScreen();
-                await sleep(150);
-                showPattern();
-            };
-            call();
-            increaseRoundCount();
+            // if rounds complete game over
+            // ! if (roundCount == MAX_ROUND) {
+            if (roundCount == 1) { // ! to check the output change this back to normal
+                changeInteractivity(false);
+                gameOver({
+                    callingScreen: screen_play,
+                    roundScore: roundScore,
+                });
+            } else {
+                playerInputCount = 0;
+                const call = async () => {
+                    await showIncorretInputScreen();
+                    await sleep(150);
+                    showPattern();
+                };
+                call();
+                increaseRoundCount();
+            }
         }
     }
 }

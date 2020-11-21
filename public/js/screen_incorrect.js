@@ -10,6 +10,7 @@ import {
 } from "/js/app.js";
 
 export const screen_incorrect = new Container();
+let textSprite;
 
 export function createScreen_incorrect() {
     let sheet = Loader.shared.resources["./images/items.json"].spritesheet;
@@ -36,6 +37,7 @@ export function createScreen_incorrect() {
     text.anchor.set(0.5);
     text.x = app.view.width / 2;
     text.y = app.view.height / 2;
+    textSprite = text;
 
     screen_incorrect.addChild(background);
     screen_incorrect.addChild(txtBackground);
@@ -46,8 +48,9 @@ export function createScreen_incorrect() {
 
 const sleep = m => new Promise(r => setTimeout(r, m));
 
-export async function showIncorretInputScreen() {
+export async function showIncorretInputScreen(txt = "Incorrect Input Watch pattern Again!") {
+    textSprite.text = txt;
     screen_incorrect.visible = true;
-    await sleep(2500);
+    await sleep(2000);
     screen_incorrect.visible = false;
 }
