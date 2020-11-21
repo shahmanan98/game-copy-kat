@@ -20,7 +20,7 @@
 			"rotated": false,
 			"trimmed": false
 		},
-		"bg_screen": {
+		"bg_scoreBar": {
 			"frame": {
 				"x": 1,
 				"y": 92,
@@ -36,6 +36,46 @@
 				"y": 1,
 				"w": 768,
 				"h": 89
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"button_help": {
+			"frame": {
+				"x": 655,
+				"y": 1476,
+				"w": 44,
+				"h": 43
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"button_mute": {
+			"frame": {
+				"x": 731,
+				"y": 1476,
+				"w": 19,
+				"h": 24
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"button_slash_black": {
+			"frame": {
+				"x": 701,
+				"y": 1476,
+				"w": 28,
+				"h": 28
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"button_slash_white": {
+			"frame": {
+				"x": 701,
+				"y": 1506,
+				"w": 28,
+				"h": 28
 			},
 			"rotated": false,
 			"trimmed": false

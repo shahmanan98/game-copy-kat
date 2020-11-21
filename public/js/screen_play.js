@@ -1,7 +1,19 @@
 // > create container to hold the screen with blocks
-import { Container, Loader, Sprite } from '/js/pixi.mjs';
-import { app, setCanvasSize } from "/js/app.js";
-import { createScreen_incorrect, showIncorretInputScreen } from "/js/screen_incorrect.js";
+import {
+    Container,
+    Loader,
+    Sprite,
+    Text,
+    TextStyle
+} from '/js/pixi.mjs';
+import {
+    app,
+    setCanvasSize
+} from "/js/app.js";
+import {
+    createScreen_incorrect,
+    showIncorretInputScreen
+} from "/js/screen_incorrect.js";
 
 export let screen_play = new Container();
 
@@ -22,8 +34,12 @@ Loader.shared.add("./images/itemcopyKat.json").add("./images/copyKat.json").add(
 function createScreen() {
     let sheet1 = Loader.shared.resources["./images/itemcopyKat.json"].spritesheet;
     let sheet2 = Loader.shared.resources["./images/copyKat.json"].spritesheet;
+    let sheet3 = Loader.shared.resources["./images/items.json"].spritesheet;
+    // ? create boxes
     createBoxes(sheet1.textures, sheet2.textures);
-    
+    // ? create title bar
+    createTitle(sheet3.textures);
+
     // ? create svreen Incorrect
     createScreen_incorrect();
 
@@ -52,18 +68,18 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     let bColour = new Sprite.from(imgUrl);
     bColour.anchor.set(0.5);
     bColour.tint = 0xeeeeee;
-    bColour._zindex = 2;
+    bColour.zindex = 0;
 
     // Create sprites for interactions
     let bClick = new Sprite.from(glowTextures.clickBox);
     bClick.anchor.set(0.5);
-    bClick._zindex = 1;
+    bClick.zindex = 0;
     bClick.alpha = 0;
 
 
     let bSuccess = new Sprite.from(glowTextures.successBox);
     bSuccess.anchor.set(0.5);
-    bSuccess._zindex = 0;
+    bSuccess.zindex = 1;
     bSuccess.alpha = 0;
     bSuccess.interactive = true;
     bSuccess.buttonmode = true;
@@ -73,6 +89,81 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
 
     boxClick[index] = bClick;
     boxSuccess[index] = bSuccess;
+}
+
+function createTitle(textures) {
+    // title Bar
+    let bar = Sprite.from(textures.bg_titleBar);
+    bar.anchor.set(0);
+    bar.x = 0;
+    bar.y = 0;
+    bar.height = app.view.height / 11;
+    bar.width = app.view.width;
+
+    // Score Bar
+    let s_bar = Sprite.from(textures.bg_scoreBar);
+    s_bar.anchor.set(0);
+    s_bar.x = 0;
+    s_bar.y = app.view.height / 11;
+    s_bar.height = app.view.height / 10;
+    s_bar.width = app.view.width;
+
+    // Title Bar Text
+    const style = new TextStyle({
+        align: "center",
+        dropShadow: true,
+        dropShadowAlpha: 0.2,
+        dropShadowBlur: 5,
+        dropShadowColor: "white",
+        dropShadowDistance: 3,
+        fill: "white",
+        fontSize: 38,
+        fontWeight: 300,
+        letterSpacing: 1,
+        lineJoin: "round",
+        stroke: "white"
+    });
+    const text = new Text('CopyKat', style);
+    text.anchor.x = 0;
+    text.anchor.y = 0.5;
+    text.x = bar.width / 2;
+    text.y = bar.height / 1.5;
+    bar.addChild(text);
+
+    // Title Bar Button - help
+    let btn_help = Sprite.from(textures.button_help);
+    btn_help.anchor.set(0.5);
+    btn_help.x = bar.width / 12;
+    btn_help.y = bar.height / 1.5;
+    btn_help.width = btn_help.height = bar.height / 1.5;
+    bar.addChild(btn_help);
+
+    // Title Bar Button - mute
+    let btn_mute = Sprite.from(textures.button_mute);
+    btn_mute.anchor.set(0.5);
+    btn_mute.x = bar.width * 1.2;
+    btn_mute.y = bar.height / 1.5;
+    btn_mute.width = btn_mute.height = bar.height / 2;
+    bar.addChild(btn_mute);
+    let btn_mute_slash = Sprite.from(textures.button_slash_white);
+    btn_mute_slash.anchor.set(0.5);
+    btn_mute_slash.x = bar.width * 1.2;
+    btn_mute_slash.y = bar.height / 1.5;
+    btn_mute_slash.width = btn_mute_slash.height = bar.height / 1.5;
+    btn_mute_slash.visible = false;
+    bar.addChild(btn_mute_slash);
+    btn_mute_slash = Sprite.from(textures.button_slash_black);
+    btn_mute_slash.anchor.set(0.5);
+    btn_mute_slash.x = bar.width * 1.2;
+    btn_mute_slash.y = bar.height / 1.5;
+    btn_mute_slash.width = btn_mute_slash.height = bar.height / 2.5;
+    btn_mute_slash.visible = false;
+    bar.addChild(btn_mute_slash);
+
+
+
+    screen_play.addChild(bar);
+    screen_play.addChild(s_bar);
 }
 // * make app resizble
 function updateSizes(e) {
@@ -86,16 +177,16 @@ function updateSizes(e) {
     }
     let x = [];
     let y = [];
-    x[PINK] = x[BLUE] = app.view.width / 2 - bW / 1.9 ;
+    x[PINK] = x[BLUE] = app.view.width / 2 - bW / 1.9;
     x[YELLOW] = x[GREEN] = app.view.width / 2 + bW / 1.9;
-    y[YELLOW] = y[BLUE] = app.view.height / 2 + bW / 2 + bW/2.6;
-    y[PINK] = y[GREEN] = app.view.height / 2 - bW / 2 + bW/3;
+    y[YELLOW] = y[BLUE] = app.view.height / 2 + bW / 2 + bW / 2.6;
+    y[PINK] = y[GREEN] = app.view.height / 2 - bW / 2 + bW / 3;
 
     for (let index = 0; index < boxColor.length; index++) {
         boxColor[index].x = x[index];
         boxClick[index].x = x[index];
         boxSuccess[index].x = x[index];
-        
+
         boxColor[index].y = y[index];
         boxClick[index].y = y[index];
         boxSuccess[index].y = y[index];
@@ -161,7 +252,7 @@ function glowBoxPlayed(index) {
                 showPattern();
             };
             call();
-            
+
         }
     }
 }
