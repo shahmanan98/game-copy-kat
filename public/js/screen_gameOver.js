@@ -19,7 +19,7 @@ export async function gameOver({
     callingScreen,
     roundScore
 }) {
-    // await showIncorretInputScreen("GAME OVER!!");
+    await showIncorretInputScreen("GAME OVER!!");
     showScoreBoard({
         callingScreen,
         roundScore

@@ -271,8 +271,7 @@ function glowBoxPlayed(index) {
         } else {
             // ? THROW ERROR FOR WRONG INPUT
             // if rounds complete game over
-            // ! if (roundCount == MAX_ROUND) {
-            if (roundCount == 1) { // ! to check the output change this back to normal
+            if (roundCount == MAX_ROUND) {
                 changeInteractivity(false);
                 gameOver({
                     callingScreen: screen_play,
