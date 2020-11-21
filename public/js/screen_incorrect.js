@@ -47,6 +47,6 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 
 export async function showIncorretInputScreen() {
     screen_incorrect.visible = true;
-    await sleep(1000);
+    await sleep(2500);
     screen_incorrect.visible = false;
 }
