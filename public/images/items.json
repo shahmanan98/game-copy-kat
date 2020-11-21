@@ -1,0 +1,43 @@
+{
+	"frames": {
+		"bg_light": {
+			"frame": {
+				"x": 1,
+				"y": 191,
+				"w": 720,
+				"h": 243
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"bg_medium": {
+			"frame": {
+				"x": 1,
+				"y": 92,
+				"w": 720,
+				"h": 97
+			},
+			"rotated": false,
+			"trimmed": false
+		},
+		"bg_black": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 768,
+				"h": 89
+			},
+			"rotated": false,
+			"trimmed": false
+		}
+	},
+	"meta": {
+		"image": "copyKat.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1270,
+			"h": 1538
+		},
+		"scale": "1"
+	}
+}
