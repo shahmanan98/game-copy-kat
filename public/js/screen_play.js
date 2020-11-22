@@ -198,8 +198,16 @@ function createTitle(textures) {
     roundText = text;
     s_bar.addChild(text);
 
+    // 
+    watchNplayText = new Text("Watch", style);
+    watchNplayText.anchor.x = 0.5;
+    watchNplayText.anchor.y = 0.5;
+    watchNplayText.x = app.view.width / 2;
+    watchNplayText.y = app.view.width / 3;
+
     screen_play.addChild(bar);
     screen_play.addChild(s_bar);
+    screen_play.addChild(watchNplayText);
 }
 
 // * to manage mute
@@ -304,6 +312,7 @@ let totalScore = 0;
 let playerInputCount = 0;
 let scoreText;
 let roundText;
+let watchNplayText;
 
 let questionArray = [];
 nextQuestion();
@@ -318,12 +327,19 @@ async function nextQuestion() {
 
 // * function to show pattern of questions
 async function showPattern() {
+    if (watchNplayText) {
+        watchNplayText.text = "Watch";
+
+    }
     for (const color of questionArray) {
         await sleep(200);
         await (glowClickBox(color));
         changeInteractivity(false);
     }
     changeInteractivity(true);
+    if (watchNplayText) {
+        watchNplayText.text = "Play";
+    }
 }
 
 // * increase total score
