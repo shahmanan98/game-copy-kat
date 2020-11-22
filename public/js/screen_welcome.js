@@ -51,9 +51,9 @@ export function createScreenWelcome() {
     s_bar.height = app.view.height / 8;
     s_bar.width = app.view.width / 1.2;
     // text - how to play
-    let textHow = new Text('How To Play', new TextStyle({
+    let textHow = new Text('Welcome To Game Copy KAt', new TextStyle({
         fill: "white",
-        fontSize: 35,
+        fontSize: 32,
         fontWeight: 200,
         fontFamily: "Verdana",
     }));
@@ -93,8 +93,16 @@ export function createScreenWelcome() {
     btn.interactive = true;
     btn.buttonMOde = true;
     btn.on('pointertap', changeScreen);
+    btn.on('pointerover', () => {
+        btn.height = app.view.height / 9.5;
+        btn.width = app.view.width / 2.5;
+    });
+    btn.on('pointerout', () => {
+        btn.height = app.view.height / 10;
+        btn.width = app.view.width / 3;
+    });
     // text - rules
-    let textStart = new Text('Continue', new TextStyle({
+    let textStart = new Text('Start', new TextStyle({
         align : "center",
         fill: "black",
         fontSize: 26,
