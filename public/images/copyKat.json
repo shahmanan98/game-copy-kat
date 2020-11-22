@@ -19,6 +19,16 @@
 			},
 			"rotated": false,
 			"trimmed": false
+		},
+		"check": {
+			"frame": {
+				"x": 863,
+				"y": 1456,
+				"w": 108,
+				"h": 81
+			},
+			"rotated": false,
+			"trimmed": false
 		}
 
 	},

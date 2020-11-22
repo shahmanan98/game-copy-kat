@@ -36,6 +36,7 @@ const PINK = 0,
 let boxColor = [];
 let boxClick = [];
 let boxSuccess = [];
+let checkMark = [];
 
 
 let bW = app.view.width / 4;
@@ -69,6 +70,7 @@ function createBoxes(boxTextures, glowTextures) {
         screen_play.addChild(boxColor[index]);
         screen_play.addChild(boxClick[index]);
         screen_play.addChild(boxSuccess[index]);
+        screen_play.addChild(checkMark[index]);
         if (index == boxColor.length - 1) {
             showPattern();
         }
@@ -97,11 +99,17 @@ function createSprite(imgUrl, index, x, y, glowTextures) {
     bSuccess.interactive = true;
     bSuccess.buttonmode = true;
 
+    let check = new Sprite.from(glowTextures.check);
+    check.anchor.set(0.5);
+    check.zindex = 0;
+    check.alpha = 0;
+
     bSuccess.on("pointerdown", (e) => glowBoxPlayed(index));
     boxColor[index] = bColour;
 
     boxClick[index] = bClick;
     boxSuccess[index] = bSuccess;
+    checkMark[index] = check;
 }
 
 function createTitle(textures) {
@@ -262,6 +270,8 @@ function updateSizes(e) {
         boxColor[index].height = boxColor[index].width = bW;
         boxClick[index].height = boxClick[index].width = bW;
         boxSuccess[index].height = boxSuccess[index].width = bW;
+        checkMark[index].height =  bW / 6;
+        checkMark[index].width = bW / 5;
     }
     let x = [];
     let y = [];
@@ -274,10 +284,12 @@ function updateSizes(e) {
         boxColor[index].x = x[index];
         boxClick[index].x = x[index];
         boxSuccess[index].x = x[index];
+        checkMark[index].x = x[index];
 
         boxColor[index].y = y[index];
         boxClick[index].y = y[index];
         boxSuccess[index].y = y[index];
+        checkMark[index].y = y[index];
     }
 }
 
@@ -291,7 +303,7 @@ async function glowClickBox(index) {
     await sleep(20);
     playBoxes(index);
     boxClick[index].alpha = 1;
-    await sleep(500);
+    await sleep(400);
     boxClick[index].alpha = 0;
     await changeInteractivity(true);
 }
@@ -302,8 +314,15 @@ async function glowSuccessBox(index) {
     await sleep(20);
     playBoxes(index);
     boxSuccess[index].alpha = 1;
-    await sleep(530);
+    checkMark[index].alpha = 1;
+    await sleep(50);
+    checkMark[index].height =  bW / 4;
+    checkMark[index].width = bW / 3;
+    await sleep(580);
     boxSuccess[index].alpha = 0;
+    checkMark[index].alpha = 0;
+    checkMark[index].height =  bW / 6;
+    checkMark[index].width = bW / 5;
 }
 
 
