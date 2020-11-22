@@ -1,4 +1,6 @@
-import {Application} from '/js/pixi.mjs';
+import {
+    Application
+} from '/js/pixi.mjs';
 
 export const app = new Application({
     width: document.getElementById("gameDiv").offsetWidth,
@@ -15,8 +17,6 @@ export function setCanvasSize() {
     let rw = h / ratio;
     let rh = w * ratio;
 
-    if (true) {
-        app.view.height = h;
-        app.view.width = Math.min(rw,w);
-    }
+    app.view.height = h;
+    app.view.width = Math.min(rw, w);
 }

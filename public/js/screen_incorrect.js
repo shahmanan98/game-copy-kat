@@ -45,6 +45,7 @@ export function createScreen_incorrect() {
     screen_incorrect.addChild(text);
 
     screen_incorrect.visible = false;
+    app.stage.addChild(screen_incorrect);
 }
 
 const sleep = m => new Promise(r => setTimeout(r, m));

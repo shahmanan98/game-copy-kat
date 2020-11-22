@@ -50,6 +50,7 @@ export function createScreen() {
     createBoxes(sheet1.textures, sheet2.textures);
     // ? create title bar
     createTitle(sheet3.textures);
+    app.stage.addChild(screen_play);
 
     // ? create screen Incorrect
     createScreen_incorrect();
