@@ -78,21 +78,42 @@ function showScoreBoard({
 
     // Scores
     showScores(roundScore);
-    // button continue
-    let btn_countinue = Sprite.from(textures.button_continue_green);
-    btn_countinue.anchor.set(0.5);
-    btn_countinue.x = app.view.width / 2;
-    btn_countinue.y = app.view.height * 0.9;
-    btn_countinue.height = app.view.height / 11;
-    btn_countinue.width = app.view.width / 3;
-    btn_countinue.interactive = true;
-    btn_countinue.buttonMode = true;
-    btn_countinue.on("pointertap", exitGame);
-    
+    // button start
+    let btn = Sprite.from(textures.button_welcome);
+    btn.anchor.set(0.5);
+    btn.x = app.view.width / 2;
+    btn.y = app.view.height / 1.1;
+    btn.height = app.view.height / 10;
+    btn.width = app.view.width / 3;
+    btn.interactive = true;
+    btn.buttonMOde = true;
+    btn.on('pointertap', exitGame);
+    btn.on('pointerover', () => {
+        btn.height = app.view.height / 9.5;
+        btn.width = app.view.width / 2.5;
+    });
+    btn.on('pointerout', () => {
+        btn.height = app.view.height / 10;
+        btn.width = app.view.width / 3;
+    });
+    // text - rules
+    let textStart = new Text('Quit', new TextStyle({
+        align: "center",
+        fill: "black",
+        fontSize: 26,
+        fontWeight: 500,
+        fontFamily: "Verdana",
+    }));
+    textStart.anchor.set(0.5);
+    textStart.x = app.view.width / 2;
+    textStart.y = app.view.height / 1.1;
+
+
     // * add to container
     screen_gameOver.addChild(bar);
     screen_gameOver.addChild(s_bar);
-    screen_gameOver.addChild(btn_countinue);
+    screen_gameOver.addChild(btn);
+    screen_gameOver.addChild(textStart);
 
     // screen change
     screen_gameOver.visible = true;
@@ -103,22 +124,23 @@ function showScoreBoard({
 }
 
 const style = new TextStyle({
-        align: "left",
-        dropShadow: true,
-        dropShadowAlpha: 0.5,
-        dropShadowBlur: 0,
-        dropShadowColor: "black",
-        dropShadowDistance: 3,
-        fill: "white",
-        fontSize: 26,
-        fontWeight: 200,
-        letterSpacing: 0,
-    });
+    align: "left",
+    dropShadow: true,
+    dropShadowAlpha: 0.5,
+    dropShadowBlur: 0,
+    dropShadowColor: "black",
+    dropShadowDistance: 3,
+    fill: "white",
+    fontSize: 26,
+    fontWeight: 200,
+    letterSpacing: 0,
+});
+
 function showScores(roundScore) {
     let y = app.view.height / 1.8 + app.view.height / 12;
     let ex = app.view.height / 15;
 
-    const max = Math.max(roundScore[0],roundScore[1],roundScore[2]);
+    const max = Math.max(roundScore[0], roundScore[1], roundScore[2]);
     let maxChosen = false;
     for (let index = 0; index < 3; index++) {
         let text = new Text(`Round  ${index+1}`, style);
@@ -162,7 +184,9 @@ function createMaxScore(maxScore) {
     graphic.closePath();
     graphic.endFill();
 
-    let s = {...style};
+    let s = {
+        ...style
+    };
     s.fontSize = 45;
     let text = new Text(maxScore, s);
     text.anchor.set(0.5);
@@ -170,6 +194,7 @@ function createMaxScore(maxScore) {
     text.y = app.view.height / 4;
     screen_gameOver.addChild(text);
 }
+
 function exitGame() {
     screen_gameOver.visible = false;
 }
