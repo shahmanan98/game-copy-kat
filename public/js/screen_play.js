@@ -255,7 +255,6 @@ function toggleMute() {
 async function glowBoxPlayed(index) {
     playerPlayed = true;
     if (index == questionArray[playerInputCount]) {
-        glowClickBox(index);
         playerInputCount++;
         if (playerInputCount == questionArray.length) {
             playerInputCount = 0;
@@ -263,6 +262,8 @@ async function glowBoxPlayed(index) {
             increaseTotalScore();
             nextQuestion();
             showPattern();
+        } else {
+        glowClickBox(index);
         }
     } else {
         if (roundCount == 3) {
@@ -279,7 +280,7 @@ async function glowBoxPlayed(index) {
             } else {
                 await showIncorretInputScreen();
             }
-            changeInteractivity(true);
+            // changeInteractivity(true);
             await sleep(150);
             increaseRoundCount();
             await showPattern();
@@ -377,8 +378,9 @@ async function showPattern() {
 
 // * to manage timeout if user is not focusing on game
 async function playerTimeOut() {
+    let callTime = questionArray.length; // to neglect previous call for time
     await sleep(5000);
-    if (!playerPlayed && boxSuccess[0].interactive == true) {
+    if (!playerPlayed && boxSuccess[0].interactive == true && callTime == questionArray.length) {
         playerPlayed = true;
         glowBoxPlayed(-1);
     }
