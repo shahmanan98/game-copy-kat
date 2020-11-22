@@ -249,7 +249,7 @@ async function glowBoxPlayed(index) {
             changeInteractivity(true);
             await sleep(150);
             increaseRoundCount();
-            showPattern();
+            await showPattern();
         }
     }
 }
@@ -322,7 +322,7 @@ nextQuestion();
 async function nextQuestion() {
     await sleep(400); // ! check the interacaivity here 
     questionArray = [...questionArray, getRandomColor()];
-    showPattern();
+    await showPattern();
 }
 
 // * function to show pattern of questions
@@ -375,10 +375,10 @@ function getRandomColor() {
 }
 
 // ! to change screen visblity from other screen
-export function showScreenPlay(flag){
+export async function showScreenPlay(flag){
     screen_play.visible = flag;
     if (flag) {
-        showPattern();
+        await showPattern();
     }
 }
 export const createScreenPlay = createScreen;
