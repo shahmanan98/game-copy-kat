@@ -28,4 +28,4 @@
 
 ----------
 
-### View deployed working example [here](https://game-copy-kat.herokuapp.com/)
+### View deployed working example (not preferable : due to free tier perfomance is low) [here](https://game-copy-kat.herokuapp.com/)
