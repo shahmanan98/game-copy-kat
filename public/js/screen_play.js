@@ -287,18 +287,22 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 // ! Assumption : Player can not click on the box while its glowing
 async function glowClickBox(index) {
     await changeInteractivity(false);
-    boxClick[index].alpha = 0.45;
     playBoxes(index);
-    await sleep(400);
+    boxClick[index].alpha = 0.5;
+    await sleep(20);
+    boxClick[index].alpha = 1;
+    await sleep(500);
     boxClick[index].alpha = 0;
     await changeInteractivity(true);
 }
 // ! Assumption : Player can not click on the box while its glowing
 async function glowSuccessBox(index) {
     await changeInteractivity(false);
-    boxSuccess[index].alpha = 0.45;
     playBoxes(index);
-    await sleep(400);
+    boxSuccess[index].alpha = 0.5;
+    await sleep(20);
+    boxSuccess[index].alpha = 1;
+    await sleep(530);
     boxSuccess[index].alpha = 0;
 }
 
