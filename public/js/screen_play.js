@@ -254,6 +254,7 @@ function toggleMute() {
 //  * to manage player input
 async function glowBoxPlayed(index) {
     playerPlayed = true;
+    console.log(roundScore);
     if (index == questionArray[playerInputCount]) {
         playerInputCount++;
         if (playerInputCount == questionArray.length) {
@@ -401,7 +402,7 @@ async function playerTimeOut(calledTimeOut) {
 // * increase total score
 function increaseTotalScore() {
     totalScore++;
-    roundScore[roundCount]++;
+    roundScore[roundCount - 1]++;
     scoreText.text = `Score : ${totalScore}`;
 }
 // * increase Round Count
