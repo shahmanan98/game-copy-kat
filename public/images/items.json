@@ -129,7 +129,18 @@
 			},
 			"rotated": false,
 			"trimmed": false
+		},
+		"star": {
+			"frame": {
+				"x": 554,
+				"y": 1466,
+				"w": 53,
+				"h": 53
+			},
+			"rotated": false,
+			"trimmed": false
 		}
+		
 	},
 	"meta": {
 		"image": "copyKat.png",

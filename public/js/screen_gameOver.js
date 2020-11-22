@@ -4,7 +4,8 @@ import {
     Sprite,
     Text,
     TextStyle,
-    Graphics
+    Graphics,
+    Ticker
 } from '/js/pixi.mjs';
 import {
     showIncorretInputScreen
@@ -165,6 +166,14 @@ function showScores(roundScore) {
             txtBackground.y = y + index * ex;
             screen_gameOver.addChild(txtBackground);
 
+            let star = new Sprite.from(sheet.textures.star);
+            
+            star.height = star.width = app.view.width / 13;
+            star.anchor.set(0.5);
+            star.x = app.view.width * 0.9;
+            star.y = y + index * ex;
+            screen_gameOver.addChild(star);
+
             createMaxScore(roundScore[index]);
 
             maxChosen = true;
@@ -183,6 +192,14 @@ function createMaxScore(maxScore) {
     graphic.drawStar(0, 0, 5, r, r / 2.5);
     graphic.closePath();
     graphic.endFill();
+
+    const ticker = new Ticker();
+    ticker.add(gameloop);
+    ticker.start();
+
+    function gameloop() {
+        graphic.rotation += 0.01;
+    }
 
     let s = {
         ...style
