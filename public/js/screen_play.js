@@ -17,8 +17,13 @@ import {
 import {
     gameOver
 } from "/js/screen_gameOver.js";
-import { playBoxes, playMute } from "/js/sound/sound.js";
-import { showHelpScreen } from "/js/screen_help.js";
+import {
+    playBoxes,
+    playMute
+} from "/js/sound/sound.js";
+import {
+    showHelpScreen
+} from "/js/screen_help.js";
 
 
 export let screen_play = new Container();
@@ -46,9 +51,8 @@ export function createScreen() {
     // ? create title bar
     createTitle(sheet3.textures);
 
-    // ? create svreen Incorrect
+    // ? create screen Incorrect
     createScreen_incorrect();
-
 }
 
 function createBoxes(boxTextures, glowTextures) {
@@ -64,8 +68,10 @@ function createBoxes(boxTextures, glowTextures) {
         screen_play.addChild(boxColor[index]);
         screen_play.addChild(boxClick[index]);
         screen_play.addChild(boxSuccess[index]);
+        if (index == boxColor.length - 1) {
+            showPattern();
+        }
     }
-    showPattern();
 }
 
 function createSprite(imgUrl, index, x, y, glowTextures) {
@@ -145,6 +151,7 @@ function createTitle(textures) {
     btn_help.interactive = true;
     btn_help.buttonMode = true;
     btn_help.on('pointertap', showHelpScreen);
+    button_help = btn_help;
     bar.addChild(btn_help);
 
     // Title Bar Button - mute
@@ -198,7 +205,9 @@ function createTitle(textures) {
 // * to manage mute
 let mute = false;
 let button_slash_black;
-let button_slash_white; 
+let button_slash_white;
+let button_help;
+
 function toggleMute() {
     mute = !mute;
     button_slash_black.visible = mute;
@@ -226,12 +235,13 @@ async function glowBoxPlayed(index) {
             });
         } else {
             playerInputCount = 0;
+            changeInteractivity(false);
             await showIncorretInputScreen();
+            changeInteractivity(true);
             await sleep(150);
             increaseRoundCount();
             showPattern();
         }
-
     }
 }
 // * make app resizble
@@ -265,17 +275,23 @@ function updateSizes(e) {
 const sleep = m => new Promise(r => setTimeout(r, m));
 
 // Async function to glow box
+// ! Assumption : Player can not click on the box while its glowing
 async function glowClickBox(index) {
+    await changeInteractivity(false);
     boxClick[index].alpha = 0.45;
     playBoxes(index);
     await sleep(400);
     boxClick[index].alpha = 0;
+    await changeInteractivity(true);
 }
+// ! Assumption : Player can not click on the box while its glowing
 async function glowSuccessBox(index) {
+    await changeInteractivity(false);
     boxSuccess[index].alpha = 0.45;
     playBoxes(index);
     await sleep(400);
     boxSuccess[index].alpha = 0;
+    await changeInteractivity(true);
 }
 
 
@@ -302,10 +318,10 @@ async function nextQuestion() {
 
 // * function to show pattern of questions
 async function showPattern() {
-    changeInteractivity(false);
     for (const color of questionArray) {
         await sleep(200);
         await (glowClickBox(color));
+        changeInteractivity(false);
     }
     changeInteractivity(true);
 }
@@ -322,7 +338,16 @@ function increaseRoundCount() {
     roundText.text = `Round : ${roundCount}/3`;
 }
 // * util to change interactive mode of boxes
-function changeInteractivity(flag) {
+async function changeInteractivity(flag) {
+    if (button_help) {
+        button_help.interactive = flag;
+        button_help.buttonMode = flag;
+        if (flag) {
+            button_help.alpha = 1;
+        } else {
+            button_help.alpha = 0.5;
+        }
+    }
     for (const box of boxSuccess) {
         box.interactive = flag;
         box.buttonmode = flag;
