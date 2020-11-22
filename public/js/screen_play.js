@@ -86,7 +86,7 @@ function createBoxes(boxTextures, glowTextures) {
     createSprite(boxTextures.yellow, YELLOW, app.view.width / 2 + bW / 2, app.view.height / 2 + bW / 2, glowTextures);
     createSprite(boxTextures.green, GREEN, app.view.width / 2 + bW / 2, app.view.height / 2 - bW / 2, glowTextures);
 
-    updateSizes();
+    updateBoxSizes();
     for (let index = 0; index < boxColor.length; index++) {
         screen_play.addChild(boxColor[index]);
         screen_play.addChild(boxClick[index]);
@@ -288,7 +288,7 @@ async function glowBoxPlayed(index) {
     }
 }
 // * make app resizble
-function updateSizes(e) {
+function updateBoxSizes(e) {
     setCanvasSize();
     bW = app.view.width / 2.4;
 
@@ -317,8 +317,13 @@ function updateSizes(e) {
         boxSuccess[index].y = y[index];
         checkMark[index].y = y[index];
     }
+    
 }
-
+function updateSizes() {
+    updateBoxSizes();
+    watchNplayText.x = app.view.width / 2;
+    watchNplayText.y = app.view.width / 3;
+}
 // Async function to glow box
 // ! Assumption : Player can not click on the box while its glowing
 async function glowClickBox(index) {
@@ -414,7 +419,7 @@ async function changeInteractivity(flag) {
 }
 // * util to generate random color
 function getRandomColor() {
-    return Math.floor(Math.random() * Math.floor(3));
+    return Math.floor(Math.random() * Math.floor(4));
 }
 
 // ! to change screen visblity from other screen
