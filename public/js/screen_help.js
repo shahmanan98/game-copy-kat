@@ -6,10 +6,16 @@ import {
     Sprite
 } from "/js/pixi.mjs";
 import {
-    app, setCanvasSize
+    app,
+    setCanvasSize
 } from "/js/app.js";
-import { playHelp } from "./sound/sound.js";
-import { showScreenPlay } from "./screen_play.js";
+import {
+    playClick,
+    playHelp
+} from "./sound/sound.js";
+import {
+    showScreenPlay
+} from "./screen_play.js";
 
 export const screen_help = new Container();
 
@@ -65,7 +71,7 @@ export function createScreenHelp() {
     r_bar.width = app.view.width / 1.2;
     // text - how to play
     let textRule = new Text('Remember and repeat the sequence of color.', new TextStyle({
-        align : "center",
+        align: "center",
         fill: "white",
         fontSize: 30,
         fontWeight: 300,
@@ -77,7 +83,7 @@ export function createScreenHelp() {
     textRule.x = app.view.width / 2;
     textRule.y = app.view.height / 2;
 
-    
+
     // button start
     let btn = Sprite.from(textures.button_welcome);
     btn.anchor.set(0.5);
@@ -87,10 +93,12 @@ export function createScreenHelp() {
     btn.width = app.view.width / 3;
     btn.interactive = true;
     btn.buttonMOde = true;
-    btn.on('pointertap', () => { showHelpScreen(false) });
+    btn.on('pointertap', () => {
+        showHelpScreen(false)
+    });
     // text - continue
     let textStart = new Text('Continue', new TextStyle({
-        align : "center",
+        align: "center",
         fill: "black",
         fontSize: 26,
         fontWeight: 300,
@@ -113,7 +121,12 @@ export function createScreenHelp() {
 }
 
 export function showHelpScreen(flag = true) {
-    playHelp();
+    if (flag) {
+        playHelp();
+
+    } else {
+        playClick();
+    }
     createScreenHelp();
     screen_help.visible = flag;
     showScreenPlay(!flag);
