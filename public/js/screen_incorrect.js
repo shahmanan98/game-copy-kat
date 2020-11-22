@@ -30,11 +30,16 @@ export function createScreen_incorrect() {
     txtBackground.x = app.view.width / 2;
     txtBackground.y = app.view.height / 2;
 
-    const style = new TextStyle({
+    const text = new Text('Incorrect Input Watch pattern Again!', new TextStyle({
+        align: "center",
         fill: "white",
-        textBaseline: "bottom"
-    });
-    const text = new Text('Incorrect Input Watch pattern Again!', style);
+        fontSize: 30,
+        fontWeight: 500,
+        fontFamily: "Verdana",
+        wordWrap: true,
+        wordWrapWidth: txtBackground.width / 1.5,
+        fontFamily: "Verdana",
+    }));
     text.anchor.set(0.5);
     text.x = app.view.width / 2;
     text.y = app.view.height / 2;
