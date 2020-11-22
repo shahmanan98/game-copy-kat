@@ -36,7 +36,7 @@ let scoreText;
 let roundText;
 let watchNplayText;
 let playerPlayed = false;
-let playerHelped = false;
+let timeout = 0;
 
 let questionArray = [];
 nextQuestion();
@@ -286,6 +286,9 @@ async function glowBoxPlayed(index) {
             await showPattern();
         }
     }
+    playerPlayed = false;
+    timeout++;
+    playerTimeOut(timeout);
 }
 // * make app resizble
 function updateBoxSizes(e) {
@@ -378,14 +381,15 @@ async function showPattern() {
         watchNplayText.text = "Play";
     }
     playerPlayed = false;
-    playerTimeOut();
+    timeout++;
+    playerTimeOut(timeout);
 }
 
 // * to manage timeout if user is not focusing on game
-async function playerTimeOut() {
+async function playerTimeOut(calledTimeOut) {
     let callTime = questionArray.length; // to neglect previous call for time
     await sleep(5000);
-    if (!playerPlayed && boxSuccess[0].interactive == true && callTime == questionArray.length) {
+    if (!playerPlayed && boxSuccess[0].interactive == true && timeout == calledTimeOut) {
         playerPlayed = true;
         glowBoxPlayed(-1);
     }
