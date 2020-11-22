@@ -5,9 +5,10 @@ import {
 export const app = new Application({
     width: document.getElementById("gameDiv").offsetWidth,
     height: window.innerHeight,
-    backgroundColor: 0x120952
+    backgroundColor : 0x222958
 });
 document.getElementById("gameDiv").appendChild(app.view);
+setCanvasSize();
 
 // * make ratio for the canvas
 export function setCanvasSize() {
