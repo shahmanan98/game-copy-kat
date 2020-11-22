@@ -299,7 +299,6 @@ async function glowSuccessBox(index) {
     playBoxes(index);
     await sleep(400);
     boxSuccess[index].alpha = 0;
-    await changeInteractivity(true);
 }
 
 
