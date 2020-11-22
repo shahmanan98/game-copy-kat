@@ -70,7 +70,7 @@ function createBoxes(boxTextures, glowTextures) {
         screen_play.addChild(boxClick[index]);
         screen_play.addChild(boxSuccess[index]);
         if (index == boxColor.length - 1) {
-            showPattern();
+            await showPattern();
         }
     }
 }
@@ -249,7 +249,7 @@ async function glowBoxPlayed(index) {
             changeInteractivity(true);
             await sleep(150);
             increaseRoundCount();
-            showPattern();
+            await showPattern();
         }
     }
 }
@@ -322,7 +322,7 @@ nextQuestion();
 async function nextQuestion() {
     await sleep(400); // ! check the interacaivity here 
     questionArray = [...questionArray, getRandomColor()];
-    showPattern();
+    await showPattern();
 }
 
 // * function to show pattern of questions
@@ -378,7 +378,7 @@ function getRandomColor() {
 export function showScreenPlay(flag){
     screen_play.visible = flag;
     if (flag) {
-        showPattern();
+        await showPattern();
     }
 }
 export const createScreenPlay = createScreen;
