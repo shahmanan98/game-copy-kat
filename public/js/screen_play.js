@@ -19,7 +19,7 @@ import {
 } from "/js/screen_gameOver.js";
 import {
     playBoxes,
-    playMute
+    playMute,
 } from "/js/sound/sound.js";
 import {
     showHelpScreen
@@ -287,9 +287,9 @@ const sleep = m => new Promise(r => setTimeout(r, m));
 // ! Assumption : Player can not click on the box while its glowing
 async function glowClickBox(index) {
     await changeInteractivity(false);
-    playBoxes(index);
     boxClick[index].alpha = 0.5;
     await sleep(20);
+    playBoxes(index);
     boxClick[index].alpha = 1;
     await sleep(500);
     boxClick[index].alpha = 0;
@@ -298,9 +298,9 @@ async function glowClickBox(index) {
 // ! Assumption : Player can not click on the box while its glowing
 async function glowSuccessBox(index) {
     await changeInteractivity(false);
-    playBoxes(index);
     boxSuccess[index].alpha = 0.5;
     await sleep(20);
+    playBoxes(index);
     boxSuccess[index].alpha = 1;
     await sleep(530);
     boxSuccess[index].alpha = 0;
