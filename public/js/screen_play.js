@@ -27,6 +27,27 @@ import {
 
 
 export let screen_play = new Container();
+// ! Variables to manage game logics
+let roundCount = 1;
+let roundScore = [0, 0, 0];
+let totalScore = 0;
+let playerInputCount = 0;
+let scoreText;
+let roundText;
+let watchNplayText;
+let playerPlayed = false;
+let playerHelped = false;
+
+let questionArray = [];
+nextQuestion();
+// * to manage mute
+let mute = false;
+let button_slash_black;
+let button_slash_white;
+let button_help;
+// sleep to manage time outs with await
+const sleep = m => new Promise(r => setTimeout(r, m));
+
 
 const PINK = 0,
     BLUE = 1,
@@ -159,7 +180,10 @@ function createTitle(textures) {
     btn_help.width = btn_help.height = bar.height / 1.5;
     btn_help.interactive = true;
     btn_help.buttonMode = true;
-    btn_help.on('pointertap', showHelpScreen);
+    btn_help.on('pointertap', () => {
+        playerPlayed = true;
+        showHelpScreen();
+    });
     button_help = btn_help;
     bar.addChild(btn_help);
 
@@ -219,11 +243,6 @@ function createTitle(textures) {
     screen_play.addChild(watchNplayText);
 }
 
-// * to manage mute
-let mute = false;
-let button_slash_black;
-let button_slash_white;
-let button_help;
 
 function toggleMute() {
     mute = !mute;
@@ -234,6 +253,7 @@ function toggleMute() {
 
 //  * to manage player input
 async function glowBoxPlayed(index) {
+    playerPlayed = true;
     if (index == questionArray[playerInputCount]) {
         glowClickBox(index);
         playerInputCount++;
@@ -242,6 +262,7 @@ async function glowBoxPlayed(index) {
             await glowSuccessBox(index);
             increaseTotalScore();
             nextQuestion();
+            showPattern();
         }
     } else {
         if (roundCount == 3) {
@@ -253,7 +274,11 @@ async function glowBoxPlayed(index) {
         } else {
             playerInputCount = 0;
             changeInteractivity(false);
-            await showIncorretInputScreen();
+            if (index == -1) {
+                await showIncorretInputScreen("Timer timed Out!  Watch Pattern Again!");
+            } else {
+                await showIncorretInputScreen();
+            }
             changeInteractivity(true);
             await sleep(150);
             increaseRoundCount();
@@ -270,7 +295,7 @@ function updateSizes(e) {
         boxColor[index].height = boxColor[index].width = bW;
         boxClick[index].height = boxClick[index].width = bW;
         boxSuccess[index].height = boxSuccess[index].width = bW;
-        checkMark[index].height =  bW / 6;
+        checkMark[index].height = bW / 6;
         checkMark[index].width = bW / 5;
     }
     let x = [];
@@ -293,8 +318,6 @@ function updateSizes(e) {
     }
 }
 
-const sleep = m => new Promise(r => setTimeout(r, m));
-
 // Async function to glow box
 // ! Assumption : Player can not click on the box while its glowing
 async function glowClickBox(index) {
@@ -316,43 +339,28 @@ async function glowSuccessBox(index) {
     boxSuccess[index].alpha = 1;
     checkMark[index].alpha = 1;
     await sleep(50);
-    checkMark[index].height =  bW / 4;
+    checkMark[index].height = bW / 4;
     checkMark[index].width = bW / 3;
     await sleep(580);
     boxSuccess[index].alpha = 0;
     checkMark[index].alpha = 0;
-    checkMark[index].height =  bW / 6;
+    checkMark[index].height = bW / 6;
     checkMark[index].width = bW / 5;
 }
 
 
 // ! logic for game starts from here
 // ! logic for game starts from here
-// ! logic for game starts from here
-let roundCount = 1;
-let roundScore = [0, 0, 0];
-let totalScore = 0;
-let playerInputCount = 0;
-let scoreText;
-let roundText;
-let watchNplayText;
-
-let questionArray = [];
-nextQuestion();
-
 
 // * function to generate question
-async function nextQuestion() {
-    await sleep(400); // ! check the interacaivity here 
+function nextQuestion() {
     questionArray = [...questionArray, getRandomColor()];
-    await showPattern();
 }
 
 // * function to show pattern of questions
 async function showPattern() {
     if (watchNplayText) {
         watchNplayText.text = "Watch";
-
     }
     for (const color of questionArray) {
         await sleep(200);
@@ -363,8 +371,18 @@ async function showPattern() {
     if (watchNplayText) {
         watchNplayText.text = "Play";
     }
+    playerPlayed = false;
+    playerTimeOut();
 }
 
+// * to manage timeout if user is not focusing on game
+async function playerTimeOut() {
+    await sleep(5000);
+    if (!playerPlayed && boxSuccess[0].interactive == true) {
+        playerPlayed = true;
+        glowBoxPlayed(-1);
+    }
+}
 // * increase total score
 function increaseTotalScore() {
     totalScore++;
@@ -394,11 +412,11 @@ async function changeInteractivity(flag) {
 }
 // * util to generate random color
 function getRandomColor() {
-    return Math.floor(Math.random() * Math.floor(totalBlocks));
+    return Math.floor(Math.random() * Math.floor(3));
 }
 
 // ! to change screen visblity from other screen
-export async function showScreenPlay(flag){
+export async function showScreenPlay(flag) {
     screen_play.visible = flag;
     if (flag) {
         await showPattern();
