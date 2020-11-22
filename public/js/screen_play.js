@@ -374,5 +374,12 @@ function getRandomColor() {
     return Math.floor(Math.random() * Math.floor(totalBlocks));
 }
 
+// ! to change screen visblity from other screen
+export function showScreenPlay(flag){
+    screen_play.visible = flag;
+    if (flag) {
+        showPattern();
+    }
+}
 export const createScreenPlay = createScreen;
 export const updateScreenPlay = updateSizes;

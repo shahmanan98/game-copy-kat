@@ -8,17 +8,13 @@ import {
 import {
     app, setCanvasSize
 } from "/js/app.js";
-import {
-    createScreenPlay,
-    screen_play
-} from "/js/screen_play.js";
 import { playClick } from "./sound/sound.js";
+import { showScreenPlay } from "./screen_play.js";
 
 export const screen_help = new Container();
 
 export function createScreenHelp() {
     setCanvasSize();
-    screen_play.visible = false;
 
     let textures = Loader.shared.resources["./images/items.json"].spritesheet.textures;
 
@@ -120,8 +116,5 @@ export function showHelpScreen(flag = true) {
     playClick();
     createScreenHelp();
     screen_help.visible = flag;
-    screen_play.visible = !flag;
-    if (!flag) {
-        createScreenPlay();
-    }
+    showScreenPlay(!flag);
 }
