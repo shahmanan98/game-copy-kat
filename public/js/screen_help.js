@@ -8,7 +8,7 @@ import {
 import {
     app, setCanvasSize
 } from "/js/app.js";
-import { playClick } from "./sound/sound.js";
+import { playHelp } from "./sound/sound.js";
 import { showScreenPlay } from "./screen_play.js";
 
 export const screen_help = new Container();
@@ -113,7 +113,7 @@ export function createScreenHelp() {
 }
 
 export function showHelpScreen(flag = true) {
-    playClick();
+    playHelp();
     createScreenHelp();
     screen_help.visible = flag;
     showScreenPlay(!flag);
