@@ -263,7 +263,7 @@ async function glowBoxPlayed(index) {
             nextQuestion();
             showPattern();
         } else {
-        glowClickBox(index);
+            glowClickBox(index);
         }
     } else {
         if (roundCount == 3) {
@@ -282,7 +282,10 @@ async function glowBoxPlayed(index) {
             }
             // changeInteractivity(true);
             await sleep(150);
-            increaseRoundCount();
+            if (questionArray.length > 2) {
+                // ! Assumption if question length is less than two do not increase round
+                increaseRoundCount();
+            }
             await showPattern();
         }
     }
@@ -320,8 +323,9 @@ function updateBoxSizes(e) {
         boxSuccess[index].y = y[index];
         checkMark[index].y = y[index];
     }
-    
+
 }
+
 function updateSizes() {
     updateBoxSizes();
     watchNplayText.x = app.view.width / 2;

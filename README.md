@@ -6,6 +6,19 @@
 
 ----------
 
+## Rules
+
+### Watch the pattern and Repeat
+
+## Assumptions
+
+1. ### For length of upto two block clicks if player inputs wrong input Round will not be updated (Minimum score is 2 to update first round)
+
+2. ### Player can not click on the blocks while they are being animated(glowing)
+
+----------
+
+
 ## Build and Run
 
 ### Prerequisites -
