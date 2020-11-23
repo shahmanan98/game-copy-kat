@@ -40,3 +40,14 @@
 5. Go to http://localhost:5000/
 
 ----------
+
+### Resources to dive in to [pixijs](https://www.pixijs.com) :
+
+- YouTube Playlists (pixijs v5)
+  - [Diving In: PixiJS](https://www.youtube.com/playlist?list=PL08jItIqOb2oGcyrgREbrm_b9OW7TE1ji) by CJ Gammon
+
+  - [Pixi.js Tutorials](https://www.youtube.com/playlist?list=PLGsA9l-S7trVmUJ7HJsNSKIj0qoAO_qO8) by Dower Chin
+
+- [Documentation](http://pixijs.download/release/docs/index.html) for pixijs [v5](https://github.com/pixijs/pixi.js/releases)
+
+- [HTML5 Game Devs Forum](https://www.html5gamedevs.com/forum/15-pixijs/) for discussions
