@@ -254,7 +254,6 @@ function toggleMute() {
 //  * to manage player input
 async function glowBoxPlayed(index) {
     playerPlayed = true;
-    console.log(roundScore);
     if (index == questionArray[playerInputCount]) {
         playerInputCount++;
         if (playerInputCount == questionArray.length) {
