@@ -39,7 +39,7 @@ export function createScreenWelcome() {
     }));
     text.anchor.x = 0;
     text.anchor.y = 0.5;
-    text.x = app.view.width / 2;
+    text.x = app.view.width / 1.7;
     text.y = bar.height / 1.2;
     bar.addChild(text);
 
@@ -53,7 +53,7 @@ export function createScreenWelcome() {
     // text - how to play
     let textHow = new Text('Welcome To Game Copy KAt', new TextStyle({
         fill: "white",
-        fontSize: 32,
+        fontSize: 30,
         fontWeight: 200,
         fontFamily: "Verdana",
     }));
