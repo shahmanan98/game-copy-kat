@@ -7,7 +7,7 @@ let muteSound;
 let incorrect;
 
 function initiateAll() {
-    mute = false;
+    // mute = false;
     boxes[0] = PIXI.sound.add('music', '/audio/Pink.mp3');
     boxes[1] = PIXI.sound.add('music', '/audio/Blue.mp3');
     boxes[2] = PIXI.sound.add('music', '/audio/Green.mp3');
